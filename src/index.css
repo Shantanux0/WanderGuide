@@ -1,0 +1,277 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+
+@layer base {
+  :root {
+    /* WanderGuide Color Palette */
+    --ocean-blue: 200 47% 33%;
+    --ocean-blue-dark: 200 47% 25%;
+    --forest-green: 135 27% 39%;
+    --sky-blue: 197 71% 73%;
+    --sandy-beige: 34 49% 81%;
+    --sunset-orange: 25 100% 63%;
+    --sunset-orange-dark: 25 100% 53%;
+    --warm-coral: 0 100% 70%;
+    --charcoal: 0 0% 20%;
+    --soft-gray: 0 0% 96%;
+    
+    --background: 0 0% 100%;
+    --foreground: 0 0% 20%;
+    
+    --card: 34 49% 95%;
+    --card-foreground: 0 0% 20%;
+    
+    --popover: 0 0% 100%;
+    --popover-foreground: 0 0% 20%;
+    
+    --primary: 200 47% 33%;
+    --primary-foreground: 0 0% 100%;
+    
+    --secondary: 34 49% 81%;
+    --secondary-foreground: 0 0% 20%;
+    
+    --muted: 0 0% 96%;
+    --muted-foreground: 0 0% 45%;
+    
+    --accent: 25 100% 63%;
+    --accent-foreground: 0 0% 100%;
+    
+    --success: 135 27% 39%;
+    --success-foreground: 0 0% 100%;
+    
+    --destructive: 0 100% 70%;
+    --destructive-foreground: 0 0% 100%;
+    
+    --border: 34 30% 85%;
+    --input: 34 30% 85%;
+    --ring: 200 47% 33%;
+    
+    --radius: 0.75rem;
+    
+    /* Gradients */
+    --gradient-hero: linear-gradient(135deg, hsla(200, 47%, 33%, 0.85), hsla(0, 0%, 0%, 0.7));
+    --gradient-cta: linear-gradient(135deg, hsl(25, 100%, 63%), hsl(25, 100%, 53%));
+    --gradient-card: linear-gradient(180deg, hsl(34, 49%, 95%), hsl(0, 0%, 100%));
+    --gradient-glass: linear-gradient(135deg, rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.05));
+    
+    /* Shadows */
+    --shadow-card: 0 4px 20px -4px rgba(44, 95, 124, 0.15);
+    --shadow-card-hover: 0 12px 32px -8px rgba(44, 95, 124, 0.25);
+    --shadow-glow: 0 0 40px rgba(255, 140, 66, 0.3);
+    
+    /* Sidebar */
+    --sidebar-background: 200 47% 33%;
+    --sidebar-foreground: 0 0% 100%;
+    --sidebar-primary: 25 100% 63%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 200 47% 40%;
+    --sidebar-accent-foreground: 0 0% 100%;
+    --sidebar-border: 200 47% 45%;
+    --sidebar-ring: 25 100% 63%;
+  }
+
+  .dark {
+    --background: 220 20% 10%;
+    --foreground: 0 0% 95%;
+    
+    --card: 220 20% 14%;
+    --card-foreground: 0 0% 95%;
+    
+    --popover: 220 20% 12%;
+    --popover-foreground: 0 0% 95%;
+    
+    --primary: 197 71% 73%;
+    --primary-foreground: 0 0% 10%;
+    
+    --secondary: 200 47% 25%;
+    --secondary-foreground: 0 0% 95%;
+    
+    --muted: 220 20% 18%;
+    --muted-foreground: 0 0% 65%;
+    
+    --accent: 25 100% 63%;
+    --accent-foreground: 0 0% 100%;
+    
+    --border: 220 20% 20%;
+    --input: 220 20% 20%;
+    --ring: 197 71% 73%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  
+  body {
+    @apply bg-background text-foreground font-sans antialiased;
+    font-family: 'Inter', sans-serif;
+  }
+  
+  h1 {
+    @apply text-3xl md:text-4xl font-bold text-primary tracking-tight;
+  }
+  
+  h2 {
+    @apply text-2xl font-semibold text-foreground;
+  }
+  
+  h3 {
+    @apply text-xl font-semibold text-foreground;
+  }
+}
+
+@layer components {
+  /* Glassmorphism */
+  .glass {
+    @apply bg-white/10 backdrop-blur-md border border-white/20;
+  }
+  
+  .glass-card {
+    @apply bg-white/80 backdrop-blur-sm border border-white/40 shadow-lg;
+  }
+  
+  /* Animated gradient background */
+  .animated-gradient {
+    background: linear-gradient(-45deg, 
+      hsl(var(--ocean-blue)), 
+      hsl(var(--forest-green)), 
+      hsl(var(--sky-blue)), 
+      hsl(var(--ocean-blue-dark))
+    );
+    background-size: 400% 400%;
+    animation: gradientShift 15s ease infinite;
+  }
+  
+  @keyframes gradientShift {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+  }
+  
+  /* Pulse animation for map pins */
+  .pulse-pin {
+    animation: pulsePin 2s ease-in-out infinite;
+  }
+  
+  @keyframes pulsePin {
+    0%, 100% { transform: scale(1); opacity: 1; }
+    50% { transform: scale(1.2); opacity: 0.7; }
+  }
+  
+  /* Shimmer loader */
+  .shimmer {
+    background: linear-gradient(90deg, 
+      hsl(var(--muted)) 0%, 
+      hsl(var(--background)) 50%, 
+      hsl(var(--muted)) 100%
+    );
+    background-size: 200% 100%;
+    animation: shimmer 1.5s infinite;
+  }
+  
+  @keyframes shimmer {
+    0% { background-position: 200% 0; }
+    100% { background-position: -200% 0; }
+  }
+  
+  /* Floating animation */
+  .float {
+    animation: float 6s ease-in-out infinite;
+  }
+  
+  @keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-20px); }
+  }
+  
+  /* Plane loader */
+  .plane-loader {
+    animation: flyPlane 2s ease-in-out infinite;
+  }
+  
+  @keyframes flyPlane {
+    0% { transform: translateX(-100%) rotate(-5deg); }
+    50% { transform: translateX(50%) rotate(5deg); }
+    100% { transform: translateX(200%) rotate(-5deg); }
+  }
+  
+  /* Card hover lift */
+  .card-lift {
+    @apply transition-all duration-300 ease-out;
+  }
+  
+  .card-lift:hover {
+    @apply -translate-y-2;
+    box-shadow: var(--shadow-card-hover);
+  }
+  
+  /* Status badges */
+  .badge-pending {
+    @apply bg-accent/20 text-accent border border-accent/30;
+  }
+  
+  .badge-confirmed {
+    @apply bg-success/20 text-success border border-success/30;
+  }
+  
+  .badge-draft {
+    @apply bg-muted text-muted-foreground border border-border;
+  }
+  
+  .badge-cancelled {
+    @apply bg-destructive/20 text-destructive border border-destructive/30;
+  }
+  
+  /* Input focus animation */
+  .input-animated {
+    @apply transition-all duration-200;
+  }
+  
+  .input-animated:focus {
+    @apply ring-2 ring-primary/50 border-primary;
+  }
+  
+  /* Error shake */
+  .shake {
+    animation: shake 0.5s ease-in-out;
+  }
+  
+  @keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    20%, 60% { transform: translateX(-5px); }
+    40%, 80% { transform: translateX(5px); }
+  }
+  
+  /* Success checkmark */
+  .checkmark-success {
+    animation: checkPop 0.4s ease-out forwards;
+  }
+  
+  @keyframes checkPop {
+    0% { transform: scale(0); opacity: 0; }
+    50% { transform: scale(1.2); }
+    100% { transform: scale(1); opacity: 1; }
+  }
+  
+  /* Map dots pattern */
+  .map-dots {
+    background-image: radial-gradient(circle, hsl(var(--primary) / 0.3) 1px, transparent 1px);
+    background-size: 30px 30px;
+  }
+}
+
+@layer utilities {
+  .text-gradient {
+    @apply bg-clip-text text-transparent;
+    background-image: linear-gradient(135deg, hsl(var(--ocean-blue)), hsl(var(--sky-blue)));
+  }
+  
+  .text-gradient-warm {
+    @apply bg-clip-text text-transparent;
+    background-image: linear-gradient(135deg, hsl(var(--sunset-orange)), hsl(var(--warm-coral)));
+  }
+}
