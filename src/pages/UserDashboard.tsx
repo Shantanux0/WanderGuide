@@ -79,12 +79,21 @@ export default function UserDashboard() {
             animate={{ opacity: 1, y: 0 }}
             className="mb-8"
           >
-            <h1 className="text-2xl md:text-3xl font-bold text-foreground mb-2">
-              Welcome back, {user?.name.split(" ")[0]}!
-            </h1>
-            <p className="text-muted-foreground">
-              Ready for your next adventure?
-            </p>
+            <div className="flex flex-col md:flex-row md:items-end justify-between gap-4">
+              <div>
+                <h1 className="text-2xl md:text-3xl font-bold text-foreground mb-2">
+                  Welcome back, {user?.name.split(" ")[0]}!
+                </h1>
+                <p className="text-muted-foreground">
+                  Ready for your next adventure?
+                </p>
+              </div>
+              <Button asChild variant="outline" className="gap-2">
+                <Link to="/passport">
+                  <span className="text-xl">📕</span> My Passport
+                </Link>
+              </Button>
+            </div>
           </motion.div>
 
           {/* Search Hero Card */}

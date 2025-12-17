@@ -1,12 +1,13 @@
 import { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
-import { Compass, Menu, X, User, LogOut, Settings, LayoutDashboard } from "lucide-react";
+import { Compass, Menu, X, User, LogOut, Settings, LayoutDashboard, Map as MapIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
+  DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
@@ -21,6 +22,7 @@ interface NavbarProps {
 const navLinks = [
   { href: "/", label: "Home" },
   { href: "/destinations", label: "Destinations" },
+  { href: "/community", label: "Community" },
   { href: "/dashboard", label: "Dashboard" },
   { href: "/contact", label: "Contact" },
 ];
@@ -111,7 +113,21 @@ export function Navbar({ isTransparent = false, user: propUser }: NavbarProps) {
                     {user.name}
                   </Button>
                 </DropdownMenuTrigger>
-                <DropdownMenuContent align="end" className="w-48">
+                <DropdownMenuContent align="end" className="w-56 font-sans">
+                  <DropdownMenuLabel>My Account</DropdownMenuLabel>
+                  <DropdownMenuSeparator />
+                  <DropdownMenuItem asChild className="cursor-pointer">
+                    <Link to="/profile">
+                      <User className="mr-2 h-4 w-4" />
+                      <span>Profile</span>
+                    </Link>
+                  </DropdownMenuItem>
+                  <DropdownMenuItem asChild className="cursor-pointer">
+                    <Link to="/passport">
+                      <MapIcon className="mr-2 h-4 w-4" />
+                      <span>My Passport</span>
+                    </Link>
+                  </DropdownMenuItem>
                   <DropdownMenuItem asChild>
                     <Link to="/dashboard" className="gap-2">
                       <LayoutDashboard className="w-4 h-4" />

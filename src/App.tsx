@@ -13,6 +13,9 @@ import Destinations from "./pages/Destinations";
 import Contact from "./pages/Contact";
 import NotFound from "./pages/NotFound";
 import Settings from "./pages/Settings";
+import Community from "./pages/Community";
+import Passport from "./pages/Passport";
+import Profile from "./pages/Profile";
 import { AuthProvider } from "@/context/AuthContext";
 import { RequireAuth } from "@/components/RequireAuth";
 
@@ -30,6 +33,7 @@ const App = () => (
             <Route path="/login" element={<Login />} />
             <Route path="/destinations" element={<Destinations />} />
             <Route path="/contact" element={<Contact />} />
+            <Route path="/community" element={<Community />} />
             <Route path="/destination/:id" element={<DestinationDetail />} /> {/* Moved and consolidated */}
 
             {/* Protected User Routes */}
@@ -58,6 +62,8 @@ const App = () => (
                 <Settings />
               </RequireAuth>
             } />
+            <Route path="/passport" element={<Passport />} />
+            <Route path="/profile" element={<Profile />} />
 
             <Route path="*" element={<NotFound />} />
           </Routes>

@@ -7,6 +7,7 @@ interface AuthContextType {
     login: (email: string, name: string) => Promise<void>;
     logout: () => void;
     toggleFavorite: (destinationId: number) => void;
+    updateUser: (user: User) => Promise<void>;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -68,8 +69,14 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         localStorage.setItem("wg_user", JSON.stringify(updatedUser));
     };
 
+    const updateUser = async (updatedUser: User) => {
+        setUser(updatedUser);
+        localStorage.setItem("wg_user", JSON.stringify(updatedUser));
+        return Promise.resolve();
+    }
+
     return (
-        <AuthContext.Provider value={{ user, isLoading, login, logout, toggleFavorite }}>
+        <AuthContext.Provider value={{ user, isLoading, login, logout, toggleFavorite, updateUser }}>
             {children}
         </AuthContext.Provider>
     );
