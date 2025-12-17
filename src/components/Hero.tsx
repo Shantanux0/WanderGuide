@@ -5,12 +5,13 @@ import { Link } from "react-router-dom";
 import { useAuth } from "@/context/AuthContext";
 
 const destinations = [
-  { name: "Paris", top: "20%", left: "45%" },
-  { name: "Tokyo", top: "35%", left: "80%" },
-  { name: "New York", top: "30%", left: "25%" },
-  { name: "Sydney", top: "70%", left: "85%" },
-  { name: "Rio", top: "60%", left: "30%" },
-  { name: "Cape Town", top: "65%", left: "52%" },
+  { name: "Paris", top: "25%", left: "51%" },
+  { name: "Tokyo", top: "34%", left: "80%" },
+  { name: "New York", top: "30%", left: "28%" },
+  { name: "Sydney", top: "78%", left: "86%" },
+  { name: "Rio", top: "70%", left: "34%" },
+  { name: "Cape Town", top: "76%", left: "55%" },
+  { name: "New Delhi", top: "42%", left: "62%" },
 ];
 
 export function Hero() {
@@ -22,7 +23,12 @@ export function Hero() {
         {/* Animated gradient overlay */}
         <div className="absolute inset-0 animated-gradient opacity-90" />
 
-        {/* Map dots pattern */}
+        {/* World Map Image */}
+        <div className="absolute inset-0 flex items-center justify-center opacity-40">
+          <img src="/world-map-minimal.avif" alt="" className="w-full h-full object-cover" />
+        </div>
+
+        {/* Map dots pattern - Keeping existing as requested, though image might overlap */}
         <div className="absolute inset-0 map-dots opacity-30" />
 
         {/* Gradient overlay */}
@@ -161,6 +167,6 @@ export function Hero() {
           <div className="w-1.5 h-1.5 bg-white rounded-full" />
         </motion.div>
       </motion.div>
-    </section>
+    </section >
   );
 }
