@@ -68,10 +68,10 @@ export function Sidebar({ isAdmin = false, user, stats }: SidebarProps) {
       initial={{ x: -20, opacity: 0 }}
       animate={{ x: 0, opacity: 1 }}
       className={cn(
-        "relative h-screen transition-all duration-300 flex flex-col border-r",
+        "sticky top-0 h-screen transition-all duration-300 flex flex-col border-r shadow-xl z-30",
         isAdmin
           ? "bg-zinc-900 text-zinc-100 border-zinc-800"
-          : "bg-sidebar text-sidebar-foreground border-sidebar-border",
+          : "bg-[#F9F6F0] text-stone-800 border-[#E6E0D4]",
         collapsed ? "w-20" : "w-64"
       )}
     >
@@ -88,10 +88,10 @@ export function Sidebar({ isAdmin = false, user, stats }: SidebarProps) {
       </button>
 
       {/* Header */}
-      <div className={cn("p-4 border-b", isAdmin ? "border-zinc-800" : "border-sidebar-border")}>
+      <div className={cn("p-4 border-b", isAdmin ? "border-zinc-800" : "border-[#E6E0D4]")}>
         <Link to="/" className="flex items-center gap-3">
-          <div className="w-10 h-10 bg-sidebar-accent rounded-lg flex items-center justify-center">
-            <Compass className="w-6 h-6 text-sidebar-primary" />
+          <div className="w-10 h-10 bg-stone-900 rounded-lg flex items-center justify-center">
+            <Compass className="w-6 h-6 text-[#F9F6F0]" />
           </div>
           <AnimatePresence>
             {!collapsed && (
@@ -99,7 +99,7 @@ export function Sidebar({ isAdmin = false, user, stats }: SidebarProps) {
                 initial={{ opacity: 0, x: -10 }}
                 animate={{ opacity: 1, x: 0 }}
                 exit={{ opacity: 0, x: -10 }}
-                className="font-bold text-lg"
+                className="font-bold text-lg text-stone-900"
               >
                 WanderGuide
               </motion.span>
@@ -109,9 +109,9 @@ export function Sidebar({ isAdmin = false, user, stats }: SidebarProps) {
       </div>
 
       {/* User Info */}
-      <div className={cn("p-4 border-b", isAdmin ? "border-zinc-800" : "border-sidebar-border")}>
+      <div className={cn("p-4 border-b", isAdmin ? "border-zinc-800" : "border-[#E6E0D4]")}>
         <div className="flex items-center gap-3">
-          <div className="w-10 h-10 rounded-full bg-sidebar-primary flex items-center justify-center text-sidebar-primary-foreground font-bold">
+          <div className="w-10 h-10 rounded-full bg-[#E6E0D4] flex items-center justify-center text-stone-800 font-bold border border-[#D6D0C4]">
             {user.name[0]}
           </div>
           <AnimatePresence>
@@ -123,10 +123,10 @@ export function Sidebar({ isAdmin = false, user, stats }: SidebarProps) {
                 className="flex-1 min-w-0"
               >
                 <div className="flex items-center gap-2">
-                  <span className="font-medium truncate">{user.name}</span>
+                  <span className="font-medium truncate text-stone-900">{user.name}</span>
                   {isAdmin && <Badge variant="admin" className="text-[10px]">Admin</Badge>}
                 </div>
-                <p className="text-xs text-sidebar-foreground/60 truncate">
+                <p className="text-xs text-stone-500 truncate">
                   {user.email}
                 </p>
               </motion.div>
@@ -143,19 +143,19 @@ export function Sidebar({ isAdmin = false, user, stats }: SidebarProps) {
               exit={{ opacity: 0, height: 0 }}
               className="mt-4 grid grid-cols-2 gap-2"
             >
-              <div className="bg-sidebar-accent rounded-lg p-2 text-center">
-                <div className="text-lg font-bold text-sidebar-primary">
+              <div className="bg-white/50 rounded-lg p-2 text-center border border-[#E6E0D4]">
+                <div className="text-lg font-bold text-stone-800">
                   {stats.upcomingTrips}
                 </div>
-                <div className="text-[10px] text-sidebar-foreground/60">
+                <div className="text-[10px] text-stone-500">
                   Upcoming
                 </div>
               </div>
-              <div className="bg-sidebar-accent rounded-lg p-2 text-center">
-                <div className="text-lg font-bold text-sidebar-primary">
+              <div className="bg-white/50 rounded-lg p-2 text-center border border-[#E6E0D4]">
+                <div className="text-lg font-bold text-stone-800">
                   {stats.pendingRequests}
                 </div>
-                <div className="text-[10px] text-sidebar-foreground/60">
+                <div className="text-[10px] text-stone-500">
                   Pending
                 </div>
               </div>
@@ -175,8 +175,8 @@ export function Sidebar({ isAdmin = false, user, stats }: SidebarProps) {
               className={cn(
                 "flex items-center gap-3 px-3 py-2.5 rounded-lg transition-all duration-200",
                 isActive
-                  ? (isAdmin ? "bg-indigo-600 text-white" : "bg-sidebar-primary text-sidebar-primary-foreground")
-                  : (isAdmin ? "text-zinc-400 hover:bg-zinc-800 hover:text-white" : "text-sidebar-foreground/80 hover:bg-sidebar-accent hover:text-sidebar-accent-foreground")
+                  ? "bg-[#E6E0D4] text-stone-900 shadow-sm"
+                  : "text-stone-600 hover:bg-[#E6E0D4]/50 hover:text-stone-900"
               )}
             >
               <item.icon className="w-5 h-5 flex-shrink-0" />
@@ -206,7 +206,7 @@ export function Sidebar({ isAdmin = false, user, stats }: SidebarProps) {
       <div className={cn("p-3 border-t", isAdmin ? "border-zinc-800" : "border-sidebar-border")}>
         <div
           onClick={() => logout()}
-          className="flex items-center gap-3 px-3 py-2.5 rounded-lg text-sidebar-foreground/80 hover:bg-sidebar-accent transition-colors cursor-pointer"
+          className="flex items-center gap-3 px-3 py-2.5 rounded-lg text-stone-600 hover:bg-[#E6E0D4]/50 hover:text-stone-900 transition-colors cursor-pointer"
         >
           <LogOut className="w-5 h-5" />
           <AnimatePresence>

@@ -64,7 +64,7 @@ export default function UserDashboard() {
     pendingRequests: 0,
   };
   return (
-    <div className="flex min-h-screen bg-muted/30">
+    <div className="flex min-h-screen bg-[#FAF9F6]">
       {/* Desktop Sidebar */}
       <div className="hidden md:block">
         <Sidebar user={user || undefined} stats={stats} />

@@ -9,7 +9,6 @@ import { store, Destination } from "@/lib/store";
 
 const destinationsLocations = [
   { name: "New York", top: "32%", left: "24%" },
-  { name: "Paris", top: "27%", left: "48%" },
   { name: "Tokyo", top: "35%", left: "80%" },
   { name: "Rio", top: "70%", left: "30%" },
   { name: "Cape Town", top: "75%", left: "52%" },
@@ -213,7 +212,7 @@ export function Hero() {
               <Input
                 type="text"
                 placeholder="Where to next?"
-                className="w-full h-10 pl-10 pr-4 rounded-full bg-white/5 backdrop-blur-sm border-white/10 text-white placeholder:text-white/50 focus:bg-white/10 focus:border-white/30 transition-all text-sm shadow-sm"
+                className="w-full h-10 pl-10 pr-4 rounded-full bg-white/5 border-white/10 text-white placeholder:text-white/50 focus:bg-white/10 focus:border-white/30 transition-all text-sm shadow-sm"
                 value={searchQuery}
                 onChange={(e) => {
                   setSearchQuery(e.target.value);

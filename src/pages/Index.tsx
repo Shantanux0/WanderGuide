@@ -178,50 +178,67 @@ export default function Index() {
       </section>
 
       {/* Testimonials */}
-      <section className="py-20 bg-primary text-primary-foreground">
-        <div className="container mx-auto px-4">
+      {/* Testimonials - Premium Redesign */}
+      <section className="py-24 bg-slate-50 relative overflow-hidden">
+        {/* Decorative elements */}
+        <div className="absolute top-0 left-0 w-64 h-64 bg-blue-100/50 rounded-full blur-3xl -translate-x-1/2 -translate-y-1/2" />
+        <div className="absolute bottom-0 right-0 w-64 h-64 bg-orange-100/50 rounded-full blur-3xl translate-x-1/2 translate-y-1/2" />
+
+        <div className="container mx-auto px-4 relative z-10">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             className="text-center mb-16"
           >
-            <h2 className="text-3xl md:text-4xl font-bold mb-4">
+            <h2 className="text-4xl md:text-5xl font-bold text-slate-900 mb-6 tracking-tight">
               Loved by Travelers
             </h2>
-            <p className="text-primary-foreground/80 max-w-2xl mx-auto">
+            <p className="text-lg text-slate-600 max-w-2xl mx-auto font-light leading-relaxed">
               Join thousands of happy explorers who've discovered the world with WanderGuide.
             </p>
           </motion.div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {testimonials.map((testimonial, i) => (
               <motion.div
                 key={testimonial.name}
-                initial={{ opacity: 0, y: 20 }}
+                initial={{ opacity: 0, y: 30 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
-                transition={{ delay: i * 0.1 }}
-                className="bg-white/10 backdrop-blur-sm rounded-xl p-6 border border-white/10"
+                transition={{ delay: i * 0.15 }}
+                className="bg-white rounded-2xl p-8 shadow-xl hover:shadow-2xl transition-all duration-300 hover:-translate-y-1 border border-slate-100 relative group"
               >
-                <div className="flex items-center gap-1 mb-4">
-                  {[...Array(testimonial.rating)].map((_, j) => (
-                    <Star key={j} className="w-4 h-4 fill-accent text-accent" />
-                  ))}
+                {/* Large Background Quote */}
+                <div className="absolute top-4 right-6 text-9xl leading-none text-slate-50 font-serif select-none -z-0 group-hover:text-blue-50 transition-colors">
+                  "
                 </div>
-                <p className="text-primary-foreground/90 mb-6 italic">
-                  "{testimonial.quote}"
-                </p>
-                <div className="flex items-center gap-3">
-                  <img
-                    src={testimonial.image}
-                    alt={testimonial.name}
-                    className="w-10 h-10 rounded-full object-cover"
-                  />
-                  <div>
-                    <div className="font-medium">{testimonial.name}</div>
-                    <div className="text-sm text-primary-foreground/60">
-                      {testimonial.location}
+
+                <div className="relative z-10 flex flex-col items-center text-center h-full">
+                  <div className="flex gap-1 mb-6">
+                    {[...Array(testimonial.rating)].map((_, j) => (
+                      <Star key={j} className="w-5 h-5 fill-amber-400 text-amber-400" />
+                    ))}
+                  </div>
+
+                  <p className="text-slate-700 text-xl font-serif italic leading-relaxed mb-8 flex-grow">
+                    "{testimonial.quote}"
+                  </p>
+
+                  <div className="flex flex-col items-center gap-3">
+                    <div className="relative">
+                      <div className="absolute inset-0 bg-blue-500/10 rounded-full blur-md" />
+                      <img
+                        src={testimonial.image}
+                        alt={testimonial.name}
+                        className="relative w-16 h-16 rounded-full object-cover border-4 border-white shadow-sm"
+                      />
+                    </div>
+                    <div>
+                      <div className="font-bold text-slate-900 text-lg">{testimonial.name}</div>
+                      <div className="text-sm text-slate-500 uppercase tracking-wider font-medium">
+                        {testimonial.location}
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -232,32 +249,47 @@ export default function Index() {
       </section>
 
       {/* CTA Section */}
-      <section className="py-20">
+      {/* CTA Section - Professional Redesign */}
+      <section className="py-24">
         <div className="container mx-auto px-4">
           <motion.div
             initial={{ opacity: 0, scale: 0.95 }}
             whileInView={{ opacity: 1, scale: 1 }}
             viewport={{ once: true }}
-            className="relative rounded-3xl overflow-hidden"
+            className="relative rounded-[2.5rem] overflow-hidden bg-[#020617] shadow-2xl shadow-blue-900/20"
           >
-            <div className="absolute inset-0 bg-gradient-to-r from-primary via-ocean-dark to-primary" />
-            <div className="absolute inset-0 map-dots opacity-20" />
-            <div className="relative z-10 py-16 px-8 md:px-16 text-center">
-              <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">
+            {/* Background Gradients */}
+            <div className="absolute inset-0 bg-gradient-to-br from-[#0F172A] via-[#1E293B] to-[#0F172A]" />
+            <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-blue-500/10 rounded-full blur-3xl mix-blend-screen -translate-y-1/2 translate-x-1/2" />
+            <div className="absolute bottom-0 left-0 w-[500px] h-[500px] bg-indigo-500/10 rounded-full blur-3xl mix-blend-screen translate-y-1/2 -translate-x-1/2" />
+
+            <div className="relative z-10 py-24 px-8 md:px-16 text-center">
+              <h2 className="text-4xl md:text-6xl font-bold text-white mb-6 tracking-tight">
                 Ready to Start Your Adventure?
               </h2>
-              <p className="text-white/80 max-w-2xl mx-auto mb-8">
-                Join WanderGuide today and let us help you plan the trip of a lifetime.
+              <p className="text-blue-100/80 text-lg md:text-xl max-w-2xl mx-auto mb-10 font-light leading-relaxed">
+                Join WanderGuide today and let us help you plan the trip of a lifetime. The world is waiting for you.
               </p>
-              <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                <Button variant="cta" size="lg" asChild>
+
+              <div className="flex flex-col sm:flex-row gap-5 justify-center">
+                <Button
+                  variant="default"
+                  size="lg"
+                  className="h-14 px-8 text-lg font-semibold bg-white text-slate-900 hover:bg-blue-50 transition-colors shadow-lg shadow-white/10"
+                  asChild
+                >
                   <Link to={user ? "/dashboard" : "/login?signup=true"}>
                     Get Started Free
                     <ArrowRight className="w-5 h-5 ml-2" />
                   </Link>
                 </Button>
-                <Button variant="glass" size="lg" asChild>
-                  <Link to="/contact">Contact Us</Link>
+                <Button
+                  variant="outline"
+                  size="lg"
+                  className="h-14 px-8 text-lg font-medium border-white/20 text-white hover:bg-white/10 hover:text-white backdrop-blur-sm transition-colors"
+                  asChild
+                >
+                  <Link to="/contact">Contact Support</Link>
                 </Button>
               </div>
             </div>
