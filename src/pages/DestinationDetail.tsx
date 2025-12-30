@@ -171,7 +171,7 @@ export default function DestinationDetail() {
                             <div className="bg-muted/30 px-6 py-4 border-b border-border/50">
                                 <div className="flex items-center justify-between">
                                     <div>
-                                        <span className="text-primary font-bold text-sm uppercase tracking-wider">Day {day.day}</span>
+                                        <span className="text-primary font-bold text-sm uppercase tracking-wider">{day.date}</span>
                                         <h3 className="text-xl font-semibold text-foreground mt-1">
                                             {day.title}
                                         </h3>
@@ -210,17 +210,49 @@ export default function DestinationDetail() {
                                                         <span>{activity.time}</span>
                                                     </div>
                                                     <div className="bg-muted/30 rounded-xl p-4 hover:bg-muted/50 transition-colors">
-                                                        <div className="flex items-start gap-3">
-                                                            <div className="w-10 h-10 rounded-lg bg-background shadow-sm flex items-center justify-center flex-shrink-0">
-                                                                <ActivityIcon className="w-5 h-5 text-foreground" />
-                                                            </div>
-                                                            <div>
-                                                                <h4 className="font-semibold text-foreground mb-1">
+                                                        <div className="flex flex-col md:flex-row gap-4">
+                                                            {activity.image && (
+                                                                <img
+                                                                    src={activity.image}
+                                                                    alt={activity.title}
+                                                                    className="w-full md:w-32 h-32 object-cover rounded-lg flex-shrink-0"
+                                                                />
+                                                            )}
+                                                            <div className="flex-1">
+                                                                <h4 className="font-semibold text-foreground mb-1 text-lg">
                                                                     {activity.title}
                                                                 </h4>
-                                                                <p className="text-sm text-muted-foreground">
+                                                                <p className="text-sm text-muted-foreground mb-3 leading-relaxed">
                                                                     {activity.description}
                                                                 </p>
+
+                                                                <div className="flex flex-wrap gap-x-4 gap-y-2">
+                                                                    {activity.location && (
+                                                                        <a
+                                                                            href={activity.mapUrl || `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(activity.location)}`}
+                                                                            target="_blank"
+                                                                            rel="noopener noreferrer"
+                                                                            className="flex items-center gap-1.5 text-xs text-primary hover:underline w-fit bg-primary/10 px-2.5 py-1 rounded-md transition-colors hover:bg-primary/20"
+                                                                            onClick={(e) => e.stopPropagation()}
+                                                                        >
+                                                                            <MapPin className="w-3.5 h-3.5" />
+                                                                            {activity.location}
+                                                                        </a>
+                                                                    )}
+                                                                    {activity.visitTime && (
+                                                                        <div className="flex items-center gap-1.5 text-xs text-muted-foreground bg-muted px-2.5 py-1 rounded-md">
+                                                                            <ActivityIcon className="w-3.5 h-3.5" />
+                                                                            <span>{activity.visitTime}</span>
+                                                                        </div>
+                                                                    )}
+                                                                </div>
+
+                                                                {activity.foodRecommendation && (
+                                                                    <div className="flex items-center gap-2 text-xs text-amber-700 dark:text-amber-400 mt-3 bg-amber-50 dark:bg-amber-950/30 px-3 py-2 rounded-lg border border-amber-100 dark:border-amber-900/50 w-fit">
+                                                                        <Utensils className="w-3.5 h-3.5 flex-shrink-0" />
+                                                                        <span className="font-medium">Try: {activity.foodRecommendation}</span>
+                                                                    </div>
+                                                                )}
                                                             </div>
                                                         </div>
                                                     </div>

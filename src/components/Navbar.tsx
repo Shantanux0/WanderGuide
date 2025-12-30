@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
-import { Compass, Menu, X, User, LogOut, Settings, LayoutDashboard, Map as MapIcon } from "lucide-react";
+import { Compass, Menu, X, User, LogOut, Settings, LayoutDashboard, Map as MapIcon, Mail } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
@@ -24,7 +24,7 @@ const navLinks = [
   { href: "/destinations", label: "Destinations" },
   { href: "/community", label: "Community" },
   { href: "/dashboard", label: "Dashboard" },
-  { href: "/contact", label: "Contact" },
+  { href: "/about", label: "About Us" },
 ];
 
 export function Navbar({ isTransparent = false, user: propUser }: NavbarProps) {
@@ -78,7 +78,7 @@ export function Navbar({ isTransparent = false, user: propUser }: NavbarProps) {
                 key={link.href}
                 to={link.href}
                 className={cn(
-                  "relative text-sm font-medium transition-colors hover:text-accent",
+                  "relative text-sm font-medium transition-colors hover:text-accent group",
                   isTransparent
                     ? "text-white/90 hover:text-white"
                     : "text-foreground/80 hover:text-primary",
@@ -87,11 +87,13 @@ export function Navbar({ isTransparent = false, user: propUser }: NavbarProps) {
                 )}
               >
                 {link.label}
-                {location.pathname === link.href && (
+                {location.pathname === link.href ? (
                   <motion.div
                     layoutId="activeNav"
                     className="absolute -bottom-1 left-0 right-0 h-0.5 bg-accent rounded-full"
                   />
+                ) : (
+                  <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-accent/50 transition-all duration-300 group-hover:w-full rounded-full" />
                 )}
               </Link>
             ))}
@@ -138,6 +140,12 @@ export function Navbar({ isTransparent = false, user: propUser }: NavbarProps) {
                     <Link to="/settings" className="gap-2">
                       <Settings className="w-4 h-4" />
                       Settings
+                    </Link>
+                  </DropdownMenuItem>
+                  <DropdownMenuItem asChild>
+                    <Link to="/contact" className="gap-2">
+                      <Mail className="w-4 h-4" />
+                      Contact Support
                     </Link>
                   </DropdownMenuItem>
                   <DropdownMenuSeparator />

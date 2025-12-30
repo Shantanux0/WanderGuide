@@ -93,7 +93,7 @@ export default function RequestItinerary() {
                                 <Input
                                     id="destination"
                                     required
-                                    placeholder="e.g. Paris, Bali, Tokyo"
+                                    placeholder="e.g. Goa, Ladakh, Kerala"
                                     className="pl-10"
                                     value={formData.destination}
                                     onChange={(e) => setFormData({ ...formData, destination: e.target.value })}

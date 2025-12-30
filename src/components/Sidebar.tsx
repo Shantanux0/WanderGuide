@@ -48,13 +48,17 @@ const userMenuItems: MenuItem[] = [
 const adminMenuItems: MenuItem[] = [
   { icon: LayoutDashboard, label: "Dashboard", href: "/admin" },
   { icon: Users, label: "User Management", href: "/admin/users" },
+  { icon: Compass, label: "Destinations", href: "/admin/destinations" },
   { icon: FileText, label: "Itinerary Requests", href: "/admin/requests", badge: true },
   { icon: Map, label: "Approved Itineraries", href: "/admin/itineraries" },
   { icon: BarChart3, label: "Analytics", href: "/admin/analytics" },
   { icon: Wrench, label: "Admin Tools", href: "/admin/tools" },
 ];
 
+import { useAuth } from "@/context/AuthContext";
+
 export function Sidebar({ isAdmin = false, user, stats }: SidebarProps) {
+  const { logout } = useAuth();
   const [collapsed, setCollapsed] = useState(false);
   const location = useLocation();
   const menuItems = isAdmin ? adminMenuItems : userMenuItems;
@@ -64,7 +68,10 @@ export function Sidebar({ isAdmin = false, user, stats }: SidebarProps) {
       initial={{ x: -20, opacity: 0 }}
       animate={{ x: 0, opacity: 1 }}
       className={cn(
-        "relative h-screen bg-sidebar text-sidebar-foreground transition-all duration-300 flex flex-col",
+        "relative h-screen transition-all duration-300 flex flex-col border-r",
+        isAdmin
+          ? "bg-zinc-900 text-zinc-100 border-zinc-800"
+          : "bg-sidebar text-sidebar-foreground border-sidebar-border",
         collapsed ? "w-20" : "w-64"
       )}
     >
@@ -81,7 +88,7 @@ export function Sidebar({ isAdmin = false, user, stats }: SidebarProps) {
       </button>
 
       {/* Header */}
-      <div className="p-4 border-b border-sidebar-border">
+      <div className={cn("p-4 border-b", isAdmin ? "border-zinc-800" : "border-sidebar-border")}>
         <Link to="/" className="flex items-center gap-3">
           <div className="w-10 h-10 bg-sidebar-accent rounded-lg flex items-center justify-center">
             <Compass className="w-6 h-6 text-sidebar-primary" />
@@ -102,7 +109,7 @@ export function Sidebar({ isAdmin = false, user, stats }: SidebarProps) {
       </div>
 
       {/* User Info */}
-      <div className="p-4 border-b border-sidebar-border">
+      <div className={cn("p-4 border-b", isAdmin ? "border-zinc-800" : "border-sidebar-border")}>
         <div className="flex items-center gap-3">
           <div className="w-10 h-10 rounded-full bg-sidebar-primary flex items-center justify-center text-sidebar-primary-foreground font-bold">
             {user.name[0]}
@@ -168,8 +175,8 @@ export function Sidebar({ isAdmin = false, user, stats }: SidebarProps) {
               className={cn(
                 "flex items-center gap-3 px-3 py-2.5 rounded-lg transition-all duration-200",
                 isActive
-                  ? "bg-sidebar-primary text-sidebar-primary-foreground"
-                  : "text-sidebar-foreground/80 hover:bg-sidebar-accent hover:text-sidebar-accent-foreground"
+                  ? (isAdmin ? "bg-indigo-600 text-white" : "bg-sidebar-primary text-sidebar-primary-foreground")
+                  : (isAdmin ? "text-zinc-400 hover:bg-zinc-800 hover:text-white" : "text-sidebar-foreground/80 hover:bg-sidebar-accent hover:text-sidebar-accent-foreground")
               )}
             >
               <item.icon className="w-5 h-5 flex-shrink-0" />
@@ -196,10 +203,10 @@ export function Sidebar({ isAdmin = false, user, stats }: SidebarProps) {
       </nav>
 
       {/* Logout */}
-      <div className="p-3 border-t border-sidebar-border">
-        <Link
-          to="/login"
-          className="flex items-center gap-3 px-3 py-2.5 rounded-lg text-sidebar-foreground/80 hover:bg-sidebar-accent transition-colors"
+      <div className={cn("p-3 border-t", isAdmin ? "border-zinc-800" : "border-sidebar-border")}>
+        <div
+          onClick={() => logout()}
+          className="flex items-center gap-3 px-3 py-2.5 rounded-lg text-sidebar-foreground/80 hover:bg-sidebar-accent transition-colors cursor-pointer"
         >
           <LogOut className="w-5 h-5" />
           <AnimatePresence>
@@ -214,7 +221,7 @@ export function Sidebar({ isAdmin = false, user, stats }: SidebarProps) {
               </motion.span>
             )}
           </AnimatePresence>
-        </Link>
+        </div>
       </div>
     </motion.aside>
   );

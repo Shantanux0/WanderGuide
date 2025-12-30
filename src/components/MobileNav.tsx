@@ -19,7 +19,10 @@ export function MobileNav({ isAdmin = false }: MobileNavProps) {
   ];
 
   return (
-    <nav className="fixed bottom-0 left-0 right-0 bg-background border-t border-border z-50 md:hidden">
+    <nav className={cn(
+      "fixed bottom-0 left-0 right-0 border-t z-50 md:hidden",
+      isAdmin ? "bg-zinc-900 border-zinc-800" : "bg-background border-border"
+    )}>
       <div className="flex items-center justify-around h-16">
         {items.map((item) => {
           const isActive = location.pathname === item.href;

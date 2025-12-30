@@ -16,11 +16,11 @@ import {
 import { TrendingUp, Users, Map, Clock } from "lucide-react";
 
 const popularDestinations = [
-  { name: "Paris", trips: 245 },
-  { name: "Tokyo", trips: 198 },
-  { name: "Bali", trips: 187 },
-  { name: "Rome", trips: 156 },
-  { name: "NYC", trips: 142 },
+  { name: "Goa", trips: 245 },
+  { name: "Kerala", trips: 198 },
+  { name: "Manali", trips: 187 },
+  { name: "Jaipur", trips: 156 },
+  { name: "Mumbai", trips: 142 },
 ];
 
 const monthlyData = [

@@ -4,7 +4,7 @@ import { User, store } from "@/lib/store";
 interface AuthContextType {
     user: User | null;
     isLoading: boolean;
-    login: (email: string, name: string) => Promise<void>;
+    login: (email: string, name: string, role?: "user" | "admin") => Promise<void>;
     logout: () => void;
     toggleFavorite: (destinationId: number) => void;
     updateUser: (user: User) => Promise<void>;
@@ -30,19 +30,17 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         setIsLoading(false);
     }, []);
 
-    const login = async (email: string, name: string) => {
+    const login = async (email: string, name: string, role: "user" | "admin" = "user") => {
         setIsLoading(true);
         // Simulate API delay
         await new Promise((resolve) => setTimeout(resolve, 800));
-
-        const role = "user";
 
         // Create new user session
         const newUser: User = {
             id: Math.random().toString(36).substr(2, 9),
             name,
             email,
-            role,
+            role, // Use the passed role
             favorites: [],
         };
 

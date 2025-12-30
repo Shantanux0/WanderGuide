@@ -20,7 +20,7 @@ export interface User {
     id: string;
     name: string;
     email: string;
-    role: "user";
+    role: "user" | "admin";
     avatar?: string;
     favorites: number[];
     preferences?: UserPreferences;
@@ -49,6 +49,9 @@ export interface ItineraryActivity {
     description: string;
     image?: string; // New
     location?: string; // New
+    mapUrl?: string; // New: Google Maps URL
+    visitTime?: string; // New: Specific time for the visit
+    foodRecommendation?: string; // New: Famous food recommendation
     tips?: string; // New
 }
 
@@ -140,137 +143,6 @@ export interface Passport {
 // Initial Data
 const INITIAL_DESTINATIONS: Destination[] = [
     {
-        id: 1,
-        name: "Santorini, Greece",
-        image: "https://images.unsplash.com/photo-1570077188670-e3a8d69ac5ff?w=800",
-        rating: 4.9,
-        reviews: 2847,
-        price: "$1,599",
-        category: "Beach",
-        tags: ["Romantic", "Island", "Historic"],
-        description: "Experience the magic of the Aegean Sea with stunning sunsets, white-washed buildings, and crystal clear waters.",
-        locationType: "International",
-        days: [
-            {
-                day: 1,
-                date: "Day 1",
-                title: "Arrival & Oia Sunset",
-                activities: [
-                    { time: "Morning", icon: "plane", title: "Arrival", description: "Arrive at Thira Airport and transfer to hotel." },
-                    { time: "Afternoon", icon: "hotel", title: "Explore Fira", description: "Walk through the capital's narrow streets." },
-                    { time: "Evening", icon: "camera", title: "Oia Sunset", description: "Watch the world-famous sunset from Oia Castle." }
-                ]
-            },
-            {
-                day: 2,
-                date: "Day 2",
-                title: "Volcano & Hot Springs",
-                activities: [
-                    { time: "Morning", icon: "ship", title: "Boat Tour", description: "Sail to the volcanic islands of Nea Kameni." },
-                    { time: "Afternoon", icon: "water", title: "Hot Springs", description: "Swim in the therapeutic thermal waters." },
-                    { time: "Evening", icon: "food", title: "Seafood Dinner", description: "Fresh seafood at Ammoudi Bay." }
-                ]
-            },
-            {
-                day: 3,
-                date: "Day 3",
-                title: "Winery & Beach",
-                activities: [
-                    { time: "Morning", icon: "wine", title: "Wine Tasting", description: "Visit Santo Wines for local varieties." },
-                    { time: "Afternoon", icon: "sun", title: "Red Beach", description: "Relax on the unique red sand beach." },
-                    { time: "Evening", icon: "plane", title: "Departure", description: "Transfer to airport for departure." }
-                ]
-            }
-        ]
-    },
-    {
-        id: 2,
-        name: "Kyoto, Japan",
-        image: "https://images.unsplash.com/photo-1493976040374-85c8e12f0c0e?w=800",
-        rating: 4.8,
-        reviews: 3421,
-        price: "$1,899",
-        category: "Cultural",
-        tags: ["Temples", "Nature", "Traditional"],
-        description: "Immerse yourself in ancient traditions, serene temples, and beautiful bamboo forests.",
-        locationType: "International",
-        days: [
-            {
-                day: 1,
-                date: "Day 1",
-                title: "Southern Higashiyama",
-                activities: [
-                    { time: "Morning", icon: "camera", title: "Kiyomizu-dera", description: "Visit the iconic wooden stage temple." },
-                    { time: "Afternoon", icon: "walk", title: "Sannenzaka", description: "Stroll through preserved historic streets." },
-                    { time: "Evening", icon: "food", title: "Gion District", description: "Spot Geishas and dine in Pontocho." }
-                ]
-            },
-            {
-                day: 2,
-                date: "Day 2",
-                title: "Arashiyama Bamboo Grove",
-                activities: [
-                    { time: "Morning", icon: "tree", title: "Bamboo Grove", description: "Walk through the towering bamboo stalks." },
-                    { time: "Afternoon", icon: "monkey", title: "Monkey Park", description: "Visit Iwatayama Monkey Park." },
-                    { time: "Evening", icon: "food", title: "Kaiseki Dinner", description: "Traditional multi-course Japanese dinner." }
-                ]
-            },
-            {
-                day: 3,
-                date: "Day 3",
-                title: "Fushimi Inari",
-                activities: [
-                    { time: "Morning", icon: "walk", title: "Fushimi Inari", description: "Hike through thousands of torii gates." },
-                    { time: "Afternoon", icon: "train", title: "Nara Day Trip", description: "Short train ride to see the deer park." },
-                    { time: "Evening", icon: "train", title: "Return", description: "Return to Kyoto station." }
-                ]
-            }
-        ]
-    },
-    {
-        id: 3,
-        name: "Bali, Indonesia",
-        image: "https://images.unsplash.com/photo-1537996194471-e657df975ab4?w=800",
-        rating: 4.7,
-        reviews: 4102,
-        price: "$1,299",
-        category: "Beach",
-        tags: ["Tropical", "Adventure", "Wellness"],
-        locationType: "International",
-        days: [
-            {
-                day: 1,
-                date: "Day 1",
-                title: "Ubud Culture",
-                activities: [
-                    { time: "Morning", icon: "monkey", title: "Monkey Forest", description: "Visit the Sacred Monkey Forest Sanctuary." },
-                    { time: "Afternoon", icon: "tree", title: "Rice Terraces", description: "Tegalalang Rice Terrace swing." },
-                    { time: "Evening", icon: "dance", title: "Traditonal Dance", description: "Watch a Kecak Fire Dance performance." }
-                ]
-            },
-            {
-                day: 2,
-                date: "Day 2",
-                title: "Seminyak Beach",
-                activities: [
-                    { time: "Morning", icon: "sun", title: "Beach Time", description: "Relax at Seminyak Beach." },
-                    { time: "Afternoon", icon: "shop", title: "Shopping", description: "Explore local boutiques." },
-                    { time: "Evening", icon: "food", title: "Beach Club", description: "Sunset drinks at Potato Head." }
-                ]
-            },
-            {
-                day: 3,
-                date: "Day 3",
-                title: "Uluwatu Temple",
-                activities: [
-                    { time: "Morning", icon: "water", title: "Padang Padang", description: "Swim at the famous surf beach." },
-                    { time: "Afternoon", icon: "camera", title: "Uluwatu Temple", description: "Cliffside temple views." },
-                    { time: "Evening", icon: "food", title: "Seafood BBQ", description: "Dinner on the beach at Jimbaran Bay." }
-                ]
-            }
-        ]
-    },
-    {
         id: 4,
         name: "Goa, India",
         image: "https://images.unsplash.com/photo-1512343879784-a960bf40e7f2?w=800",
@@ -287,9 +159,37 @@ const INITIAL_DESTINATIONS: Destination[] = [
                 date: "Day 1",
                 title: "North Goa Vibes",
                 activities: [
-                    { time: "Morning", icon: "water", title: "Baga Beach", description: "Water sports and fun at the beach." },
-                    { time: "Afternoon", icon: "food", title: "Beach Shack", description: "Authentic Goan curry at a shack." },
-                    { time: "Evening", icon: "dance", title: "Nightlife", description: "Experience the party scene at Tito's Lane." }
+                    {
+                        time: "Morning",
+                        icon: "water",
+                        title: "Baga Beach",
+                        description: "Water sports and fun at the beach.",
+                        image: "https://images.unsplash.com/photo-1590499092873-1628d7d3d0b2?w=800",
+                        location: "Baga Beach, North Goa",
+                        mapUrl: "https://maps.google.com/?q=Baga+Beach+Goa",
+                        visitTime: "9:00 AM - 12:00 PM",
+                        foodRecommendation: "Goan Fish Curry at Brittany's Shack"
+                    },
+                    {
+                        time: "Afternoon",
+                        icon: "food",
+                        title: "Beach Shack Lunch",
+                        description: "Authentic Goan curry at a shack.",
+                        image: "https://images.unsplash.com/photo-1601050690597-df0568f70950?w=800",
+                        location: "Calangute Beach",
+                        visitTime: "1:00 PM - 3:00 PM",
+                        foodRecommendation: "Prawn Balchao"
+                    },
+                    {
+                        time: "Evening",
+                        icon: "dance",
+                        title: "Nightlife at Tito's",
+                        description: "Experience the party scene at Tito's Lane.",
+                        image: "https://images.unsplash.com/photo-1566737236500-c8ac43014a67?w=800",
+                        location: "Tito's Lane, Baga",
+                        visitTime: "8:00 PM onwards",
+                        foodRecommendation: "Cocktails & Tapas"
+                    }
                 ]
             },
             {
@@ -297,9 +197,37 @@ const INITIAL_DESTINATIONS: Destination[] = [
                 date: "Day 2",
                 title: "Old Goa Heritage",
                 activities: [
-                    { time: "Morning", icon: "camera", title: "Basilica of Bom Jesus", description: "Visit the UNESCO World Heritage site." },
-                    { time: "Afternoon", icon: "walk", title: "Fontainhas", description: "Walk through the Latin Quarter." },
-                    { time: "Evening", icon: "ship", title: "River Cruise", description: "Sunset cruise on the Mandovi River." }
+                    {
+                        time: "Morning",
+                        icon: "camera",
+                        title: "Basilica of Bom Jesus",
+                        description: "Visit the UNESCO World Heritage site.",
+                        image: "https://images.unsplash.com/photo-1598556885374-299d638e078c?w=800",
+                        location: "Old Goa Road",
+                        mapUrl: "https://maps.google.com/?q=Basilica+of+Bom+Jesus",
+                        visitTime: "10:00 AM - 11:30 AM",
+                        foodRecommendation: "Bebinca (Traditional Layer Cake)"
+                    },
+                    {
+                        time: "Afternoon",
+                        icon: "walk",
+                        title: "Fontainhas Walk",
+                        description: "Walk through the colorful Latin Quarter.",
+                        image: "https://images.unsplash.com/photo-1620760465228-5ae9f949c25f?w=800",
+                        location: "Panjim, Goa",
+                        visitTime: "4:00 PM - 6:00 PM",
+                        foodRecommendation: "Serradurra at a local bakery"
+                    },
+                    {
+                        time: "Evening",
+                        icon: "ship",
+                        title: "Mandovi River Cruise",
+                        description: "Sunset cruise with folk dances.",
+                        image: "https://images.unsplash.com/photo-1605218439446-cf12c0a96974?w=800",
+                        location: "Mandovi River Jetty",
+                        visitTime: "6:30 PM - 8:30 PM",
+                        foodRecommendation: "Snacks on board"
+                    }
                 ]
             },
             {
@@ -307,9 +235,36 @@ const INITIAL_DESTINATIONS: Destination[] = [
                 date: "Day 3",
                 title: "South Goa Peace",
                 activities: [
-                    { time: "Morning", icon: "sun", title: "Palolem Beach", description: "Relax at the scenic crescent beach." },
-                    { time: "Afternoon", icon: "camera", title: "Cabo de Rama", description: "Visit the historic fort with sea views." },
-                    { time: "Evening", icon: "food", title: "Seafood Dinner", description: "Fresh catch at Martin's Corner." }
+                    {
+                        time: "Morning",
+                        icon: "sun",
+                        title: "Palolem Beach",
+                        description: "Relax at the scenic crescent beach.",
+                        image: "https://images.unsplash.com/photo-1582233479366-6d38bc390a08?w=800",
+                        location: "Canacona, South Goa",
+                        visitTime: "9:00 AM - 1:00 PM",
+                        foodRecommendation: "Fresh Coconut Water"
+                    },
+                    {
+                        time: "Afternoon",
+                        icon: "camera",
+                        title: "Cabo de Rama Fort",
+                        description: "Visit the historic fort with sea views.",
+                        image: "https://images.unsplash.com/photo-1650616127116-2911b3307684?w=800",
+                        location: "South Goa",
+                        visitTime: "3:00 PM - 5:00 PM",
+                        foodRecommendation: "Local Cashew Feni (Optional)"
+                    },
+                    {
+                        time: "Evening",
+                        icon: "food",
+                        title: "Seafood Dinner",
+                        description: "Fresh catch at Martin's Corner.",
+                        image: "https://images.unsplash.com/photo-1599021456807-b55062e3d8c1?w=800",
+                        location: "Betalbatim",
+                        visitTime: "7:30 PM PM onwards",
+                        foodRecommendation: "Crab Xec Xec"
+                    }
                 ]
             }
         ]
@@ -398,92 +353,6 @@ const INITIAL_DESTINATIONS: Destination[] = [
                     { time: "Morning", icon: "bus", title: "Drive to Alleppey", description: "Scenic drive from Thekkady." },
                     { time: "Afternoon", icon: "ship", title: "Houseboat", description: "Check into a houseboat for a cruise." },
                     { time: "Evening", icon: "food", title: "Onboard Dinner", description: "Traditional Kerala meal on the boat." }
-                ]
-            }
-        ]
-    },
-    {
-        id: 7,
-        name: "Maldives",
-        image: "https://images.unsplash.com/photo-1514282401047-d79a71a590e8?w=800",
-        rating: 4.9,
-        reviews: 2098,
-        price: "$3,299",
-        category: "Beach",
-        tags: ["Luxury", "Diving", "Overwater"],
-        locationType: "International",
-        days: [
-            {
-                day: 1,
-                date: "Day 1",
-                title: "Island Arrival",
-                activities: [
-                    { time: "Morning", icon: "plane", title: "Seaplane Transfer", description: "Scenic flight to the resort." },
-                    { time: "Afternoon", icon: "hotel", title: "Overwater Villa", description: "Check into your luxury villa." },
-                    { time: "Evening", icon: "food", title: "Beach Dinner", description: "Candlelight dinner on the sand." }
-                ]
-            },
-            {
-                day: 2,
-                date: "Day 2",
-                title: "Underwater World",
-                activities: [
-                    { time: "Morning", icon: "water", title: "Snorkeling", description: "Explore the house reef." },
-                    { time: "Afternoon", icon: "sun", title: "Spa", description: "Underwater spa treatment." },
-                    { time: "Evening", icon: "glass", title: "Sunset Cruise", description: "Dolphin watching cruise." }
-                ]
-            },
-            {
-                day: 3,
-                date: "Day 3",
-                title: "Leisure & Departure",
-                activities: [
-                    { time: "Morning", icon: "sun", title: "Pool Time", description: "Relax by the infinity pool." },
-                    { time: "Afternoon", icon: "water", title: "Watersports", description: "Kayaking or jet skiing." },
-                    { time: "Evening", icon: "plane", title: "Departure", description: "Speedboat to airport." }
-                ]
-            }
-        ]
-    },
-    {
-        id: 8,
-        name: "Swiss Alps",
-        image: "https://images.unsplash.com/photo-1531366936337-7c912a4589a7?w=800",
-        rating: 4.8,
-        reviews: 1765,
-        price: "$2,199",
-        category: "Adventure",
-        tags: ["Skiing", "Mountains", "Scenic"],
-        locationType: "International",
-        days: [
-            {
-                day: 1,
-                date: "Day 1",
-                title: "Zermatt Arrival",
-                activities: [
-                    { time: "Morning", icon: "train", title: "Glacier Express", description: "Scenic train ride to Zermatt." },
-                    { time: "Afternoon", icon: "walk", title: "Village Walk", description: "Explore the car-free village." },
-                    { time: "Evening", icon: "food", title: "Fondue", description: "Traditional Swiss cheese fondue." }
-                ]
-            },
-            {
-                day: 2,
-                date: "Day 2",
-                title: "Matterhorn",
-                activities: [
-                    { time: "Morning", icon: "mountain", title: "Gornergrat", description: "Cogwheel train to Matterhorn view." },
-                    { time: "Afternoon", icon: "walk", title: "Hiking / Skiing", description: "Outdoor activities on the slopes." },
-                    { time: "Evening", icon: "glass", title: "Apres Ski", description: "Relax at a mountain bar." }
-                ]
-            },
-            {
-                day: 3,
-                date: "Day 3",
-                title: "Interlaken",
-                activities: [
-                    { time: "Morning", icon: "train", title: "Train to Interlaken", description: "Journey between the lakes." },
-                    { time: "Afternoon", icon: "ship", title: "Lake Cruise", description: "Boat trip on Lake Brienz." },
-                    { time: "Evening", icon: "food", title: "Chocolate", description: "Swiss chocolate tasting." }
                 ]
             }
         ]
@@ -619,89 +488,320 @@ const INITIAL_DESTINATIONS: Destination[] = [
                 ]
             }
         ]
+    },
+    {
+        id: 12,
+        name: "Agra, India",
+        image: "https://images.unsplash.com/photo-1564507592333-c60657eea523?w=800",
+        rating: 4.9,
+        reviews: 8765,
+        price: "₹15,000",
+        category: "Historic",
+        tags: ["Wonder", "Mughal", "History"],
+        description: "Home to the Taj Mahal, a symbol of eternal love and architectural marvel.",
+        locationType: "National",
+        days: [
+            {
+                day: 1,
+                date: "Day 1",
+                title: "Symbol of Love",
+                activities: [
+                    { time: "Morning", icon: "camera", title: "Taj Mahal", description: "Sunrise visit to the Taj Mahal." },
+                    { time: "Afternoon", icon: "walk", title: "Agra Fort", description: "Explore the massive red sandstone fort." },
+                    { time: "Evening", icon: "sun", title: "Mehtab Bagh", description: "Sunset view of Taj Mahal from across the river." }
+                ]
+            },
+            {
+                day: 2,
+                date: "Day 2",
+                title: "Fatehpur Sikri",
+                activities: [
+                    { time: "Morning", icon: "bus", title: "Fatehpur Sikri", description: "Trip to the abandoned Mughal capital." },
+                    { time: "Afternoon", icon: "shop", title: "Kinari Bazaar", description: "Shop for marble handicrafts." },
+                    { time: "Evening", icon: "food", title: "Mughlai Dinner", description: "Authentic cuisine at Pinch of Spice." }
+                ]
+            },
+            {
+                day: 3,
+                date: "Day 3",
+                title: "Sikandra & Departure",
+                activities: [
+                    { time: "Morning", icon: "camera", title: "Akbar's Tomb", description: "Visit the tomb of Akbar the Great in Sikandra." },
+                    { time: "Afternoon", icon: "walk", title: "Itmad-ud-Daulah", description: "Visit the 'Baby Taj'." },
+                    { time: "Evening", icon: "train", title: "Departure", description: "Transfer to railway station." }
+                ]
+            }
+        ]
+    },
+    {
+        id: 13,
+        name: "Manali, India",
+        image: "https://images.unsplash.com/photo-1626621341517-bbf3d9990a23?w=800",
+        rating: 4.8,
+        reviews: 4321,
+        price: "₹22,000",
+        category: "Mountain",
+        tags: ["Snow", "Adventure", "Nature"],
+        description: "A high-altitude resort town in the Himalayas, a backpacker's paradise.",
+        locationType: "National",
+        days: [
+            {
+                day: 1,
+                date: "Day 1",
+                title: "Mountain Vibes",
+                activities: [
+                    { time: "Morning", icon: "temple", title: "Hadimba Temple", description: "Visit the ancient wooden temple." },
+                    { time: "Afternoon", icon: "walk", title: "Mall Road", description: "Explore local shops and cafes." },
+                    { time: "Evening", icon: "food", title: "Old Manali", description: "Dinner at a riverside cafe." }
+                ]
+            },
+            {
+                day: 2,
+                date: "Day 2",
+                title: "Solang Valley",
+                activities: [
+                    { time: "Morning", icon: "mountain", title: "Solang Valley", description: "Paragliding and adventure sports." },
+                    { time: "Afternoon", icon: "walk", title: "Vashisht Hot Springs", description: "Dip in the natural hot springs." },
+                    { time: "Evening", icon: "sun", title: "Sunset", description: "Relax with mountain views." }
+                ]
+            },
+            {
+                day: 3,
+                date: "Day 3",
+                title: "Rohtang Pass",
+                activities: [
+                    { time: "Morning", icon: "mountain", title: "Rohtang Pass", description: "Snow activities at the pass (seasonal)." },
+                    { time: "Afternoon", icon: "camera", title: "Atal Tunnel", description: "Drive through the engineering marvel." },
+                    { time: "Evening", icon: "bus", title: "Return", description: "Return to Manali town." }
+                ]
+            }
+        ]
+    },
+    {
+        id: 14,
+        name: "Varanasi, India",
+        image: "/varanasi.webp",
+        rating: 4.7,
+        reviews: 5678,
+        price: "₹14,000",
+        category: "Spiritual",
+        tags: ["Ganga", "Ancient", "Culture"],
+        description: "The spiritual capital of India, one of the world's oldest living cities.",
+        locationType: "National",
+        days: [
+            {
+                day: 1,
+                date: "Day 1",
+                title: "Ganga Aarti",
+                activities: [
+                    { time: "Morning", icon: "temple", title: "Kashi Vishwanath", description: "Darshan at the Golden Temple." },
+                    { time: "Afternoon", icon: "walk", title: "Banaras Hindu University", description: "Visit the vast campus and museum." },
+                    { time: "Evening", icon: "fire", title: "Ganga Aarti", description: "Witness the grand aarti at Dashashwamedh Ghat." }
+                ]
+            },
+            {
+                day: 2,
+                date: "Day 2",
+                title: "Sarnath & Silk",
+                activities: [
+                    { time: "Morning", icon: "temple", title: "Sarnath", description: "Site where Buddha gave his first sermon." },
+                    { time: "Afternoon", icon: "shop", title: "Silk Saree Weaving", description: "Watch artisans weave Banarasi sarees." },
+                    { time: "Evening", icon: "ship", title: "Boat Ride", description: "Sunset boat ride on the Ganges." }
+                ]
+            },
+            {
+                day: 3,
+                date: "Day 3",
+                title: "Ghats Walk",
+                activities: [
+                    { time: "Morning", icon: "sun", title: "Subah-e-Banaras", description: "Morning cultural program at Assi Ghat." },
+                    { time: "Afternoon", icon: "food", title: "Street Food", description: "Try Kachori Sabzi and Malaiyo." },
+                    { time: "Evening", icon: "walk", title: "Ghat Walk", description: "Walk along the interconnected ghats." }
+                ]
+            }
+        ]
+    },
+    {
+        id: 15,
+        name: "Ladakh, India",
+        image: "https://images.unsplash.com/photo-1581793745862-99fde7fa73d2?w=800",
+        rating: 4.9,
+        reviews: 3456,
+        price: "₹35,000",
+        category: "Adventure",
+        tags: ["Mountains", "Lakes", "Monastery"],
+        description: "A land of high passes, stark mountains, and crystal clear lakes.",
+        locationType: "National",
+        days: [
+            {
+                day: 1,
+                date: "Day 1",
+                title: "Leh Acclimatization",
+                activities: [
+                    { time: "Morning", icon: "plane", title: "Arrival", description: "Arrive in Leh and rest for acclimatization." },
+                    { time: "Afternoon", icon: "walk", title: "Leh Market", description: "Gentle walk in the local market." },
+                    { time: "Evening", icon: "temple", title: "Shanti Stupa", description: "Sunset view from the Stupa." }
+                ]
+            },
+            {
+                day: 2,
+                date: "Day 2",
+                title: "Monasteries",
+                activities: [
+                    { time: "Morning", icon: "temple", title: "Thiksey Monastery", description: "Visit the largest monastery in central Ladakh." },
+                    { time: "Afternoon", icon: "camera", title: "Shey Palace", description: "Visit the old summer palace." },
+                    { time: "Evening", icon: "coffee", title: "Cafe Hopping", description: "Relax at a cafe in Leh." }
+                ]
+            },
+            {
+                day: 3,
+                date: "Day 3",
+                title: "Pangong Lake",
+                activities: [
+                    { time: "Morning", icon: "bus", title: "Drive to Pangong", description: "Cross Chang La pass to reach the lake." },
+                    { time: "Afternoon", icon: "water", title: "Pangong Tso", description: "Marvel at the changing colors of the lake." },
+                    { time: "Evening", icon: "star", title: "Stargazing", description: "Camp by the lake." }
+                ]
+            }
+        ]
+    },
+    {
+        id: 16,
+        name: "Konkan, India",
+        image: "/konkan.webp",
+        rating: 4.8,
+        reviews: 2134,
+        price: "₹16,000",
+        category: "Beach",
+        tags: ["Nature", "Food", "Beaches"],
+        description: "Pristine beaches, ancient forts, and authentic Malvani cuisine along the western coast.",
+        locationType: "National",
+        days: [
+            {
+                day: 1,
+                date: "Day 1",
+                title: "Coastal Drive",
+                activities: [
+                    { time: "Morning", icon: "bus", title: "Drive to Alibaug", description: "Scenic coastal drive." },
+                    { time: "Afternoon", icon: "water", title: "Nagaon Beach", description: "Water sports and relaxation." },
+                    { time: "Evening", icon: "food", title: "Seafood Thali", description: "Authentic Konkani seafood dinner." }
+                ]
+            },
+            {
+                day: 2,
+                date: "Day 2",
+                title: "Forts & History",
+                activities: [
+                    { time: "Morning", icon: "ship", title: "Murud Janjira", description: "Boat ride to the impregnable sea fort." },
+                    { time: "Afternoon", icon: "walk", title: "Beach Walk", description: "Walk along the Kashid beach." },
+                    { time: "Evening", icon: "sun", title: "Sunset", description: "Sunset views over the Arabian Sea." }
+                ]
+            },
+            {
+                day: 3,
+                date: "Day 3",
+                title: "Malvan & Tarkarli",
+                activities: [
+                    { time: "Morning", icon: "water", title: "Scuba Diving", description: "Explore coral reefs in Tarkarli." },
+                    { time: "Afternoon", icon: "camera", title: "Sindhudurg Fort", description: "Visit the historic Shivaji Maharaj fort." },
+                    { time: "Evening", icon: "bus", title: "Return", description: "Journey back with memories." }
+                ]
+            }
+        ]
+    },
+    {
+        id: 17,
+        name: "Hampi, India",
+        image: "/Hampi_karnataka.jpg",
+        rating: 4.9,
+        reviews: 3012,
+        price: "₹18,000",
+        category: "Historic",
+        tags: ["Ruins", "Culture", "Boulders"],
+        description: "A UNESCO World Heritage site featuring ancient ruins, massive boulders, and a riverside vibe.",
+        locationType: "National",
+        days: [
+            {
+                day: 1,
+                date: "Day 1",
+                title: "Sacred Center",
+                activities: [
+                    { time: "Morning", icon: "temple", title: "Virupaksha Temple", description: "Visit the towering ancient temple." },
+                    { time: "Afternoon", icon: "walk", title: "Hampi Bazaar", description: "Explore the ancient market street." },
+                    { time: "Evening", icon: "sun", title: "Hemakuta Hill", description: "Sunset views over the ruins." }
+                ]
+            },
+            {
+                day: 2,
+                date: "Day 2",
+                title: "Royal Center",
+                activities: [
+                    { time: "Morning", icon: "camera", title: "Vittala Temple", description: "See the famous Stone Chariot." },
+                    { time: "Afternoon", icon: "walk", title: "Lotus Mahal", description: "Explore the royal enclosure." },
+                    { time: "Evening", icon: "water", title: "Coracle Ride", description: "Boat ride on the Tungabhadra river." }
+                ]
+            },
+            {
+                day: 3,
+                date: "Day 3",
+                title: "Hippie Island",
+                activities: [
+                    { time: "Morning", icon: "bus", title: "Sanapur Lake", description: "Relax by the scenic lake." },
+                    { time: "Afternoon", icon: "food", title: "Cafe Lunch", description: "Chill at a cafe with rice paddy views." },
+                    { time: "Evening", icon: "mountain", title: "Anjaneya Hill", description: "Hike for panoramic sunset views." }
+                ]
+            }
+        ]
     }
 ];
 
 const INITIAL_ITINERARIES: Itinerary[] = [
     {
-        id: "1",
-        userId: "user-1",
-        destination: "Paris, France",
-        heroImage: "https://images.unsplash.com/photo-1502602898657-3e91760cbb34?w=1200",
-        startDate: "2024-03-10",
-        endDate: "2024-03-15",
-        status: "completed",
-        price: 25000,
-        days: [
-            {
-                day: 1,
-                date: "December 15",
-                title: "Arrival & Champs-Élysées",
-                activities: [
-                    {
-                        time: "Morning",
-                        icon: "plane",
-                        title: "Arrive at Charles de Gaulle Airport",
-                        description: "Private transfer to hotel in the 8th arrondissement",
-                    },
-                    {
-                        time: "Afternoon",
-                        icon: "hotel",
-                        title: "Check-in at Hotel Le Bristol",
-                        description: "Settle into your suite with Eiffel Tower views",
-                    },
-                    {
-                        time: "Evening",
-                        icon: "food",
-                        title: "Dinner at L'Avenue",
-                        description: "Classic French cuisine on the Champs-Élysées",
-                    },
-                ],
-            },
-            {
-                day: 2,
-                date: "December 16",
-                title: "Art & Culture Day",
-                activities: [
-                    {
-                        time: "Morning",
-                        icon: "camera",
-                        title: "Louvre Museum",
-                        description: "Skip-the-line tickets, see Mona Lisa and Venus de Milo",
-                    },
-                    {
-                        time: "Afternoon",
-                        icon: "food",
-                        title: "Lunch at Café Marly",
-                        description: "Dine with views of the Louvre pyramid",
-                    },
-                    {
-                        time: "Evening",
-                        icon: "camera",
-                        title: "Seine River Cruise",
-                        description: "Sunset cruise past Notre-Dame and the Eiffel Tower",
-                    },
-                ],
-            },
-        ],
-    },
-    {
         id: "2",
         userId: "user-1",
         destination: "Goa, India",
         heroImage: "https://images.unsplash.com/photo-1512343879784-a960bf40e7f2?w=1200",
-        startDate: "2024-01-10", // Past date to show as completed in passport
+        startDate: "2024-01-10",
         endDate: "2024-01-15",
         status: "completed",
+        price: 25000,
         days: [
             {
                 day: 1,
                 date: "January 10",
                 title: "North Goa Vibes",
                 activities: [
-                    { time: "Morning", icon: "water", title: "Baga Beach", description: "Water sports and fun at the beach." },
-                    { time: "Afternoon", icon: "food", title: "Britto's", description: "Lunch at the famous beach shack." },
-                    { time: "Evening", icon: "dance", title: "Night Market", description: "Shopping at Arpora Saturday Night Market." }
+                    {
+                        time: "Morning",
+                        icon: "water",
+                        title: "Baga Beach",
+                        description: "Water sports and fun at the beach.",
+                        image: "https://images.unsplash.com/photo-1590499092873-1628d7d3d0b2?w=800",
+                        location: "Baga Beach, North Goa",
+                        mapUrl: "https://goo.gl/maps/example",
+                        visitTime: "9:00 AM - 12:00 PM",
+                        foodRecommendation: "Goan Fish Curry at Brittany's"
+                    },
+                    {
+                        time: "Afternoon",
+                        icon: "food",
+                        title: "Britto's",
+                        description: "Lunch at the famous beach shack.",
+                        image: "https://images.unsplash.com/photo-1601050690597-df0568f70950?w=800",
+                        location: "Baga Beach",
+                        visitTime: "1:00 PM",
+                        foodRecommendation: "Seafood Platter"
+                    },
+                    {
+                        time: "Evening",
+                        icon: "dance",
+                        title: "Night Market",
+                        description: "Shopping at Arpora Saturday Night Market.",
+                        image: "https://images.unsplash.com/photo-1566737236500-c8ac43014a67?w=800",
+                        location: "Arpora",
+                        visitTime: "7:00 PM onwards",
+                        foodRecommendation: "Street Food Stalls"
+                    }
                 ]
             }
         ]
@@ -711,18 +811,44 @@ const INITIAL_ITINERARIES: Itinerary[] = [
         userId: "user-1",
         destination: "Ujjain, India",
         heroImage: "/ujjain.jpg",
-        startDate: "2024-03-01", // Past date
+        startDate: "2024-03-01",
         endDate: "2024-03-03",
         status: "completed",
+        price: 12000,
         days: [
             {
                 day: 1,
                 date: "March 1",
                 title: "Mahakal Darshan",
                 activities: [
-                    { time: "Morning", icon: "temple", title: "Mahakaleshwar", description: "Bhasma Aarti and Darshan." },
-                    { time: "Afternoon", icon: "walk", title: "Ram Ghat", description: "Holy dip in Shipra river." },
-                    { time: "Evening", icon: "temple", title: "Harsiddhi Mata", description: "Evening Aarti." }
+                    {
+                        time: "Morning",
+                        icon: "temple",
+                        title: "Mahakaleshwar",
+                        description: "Bhasma Aarti and Darshan.",
+                        location: "Mahakaleshwar Jyotirlinga",
+                        mapUrl: "https://goo.gl/maps/ujjain",
+                        visitTime: "4:00 AM - 11:00 AM",
+                        foodRecommendation: "Poha Jalebi"
+                    },
+                    {
+                        time: "Afternoon",
+                        icon: "walk",
+                        title: "Ram Ghat",
+                        description: "Holy dip in Shipra river.",
+                        location: "Ram Ghat, Ujjain",
+                        visitTime: "4:00 PM",
+                        foodRecommendation: "Rabri"
+                    },
+                    {
+                        time: "Evening",
+                        icon: "temple",
+                        title: "Harsiddhi Mata",
+                        description: "Evening Aarti.",
+                        location: "Harsiddhi Temple",
+                        visitTime: "7:00 PM",
+                        foodRecommendation: "Prasad"
+                    }
                 ]
             }
         ]
@@ -732,44 +858,47 @@ const INITIAL_ITINERARIES: Itinerary[] = [
         userId: "user-1",
         destination: "Pune, India",
         heroImage: "/pune.jpeg",
-        startDate: "2025-02-14", // Future date (upcoming)
+        startDate: "2025-02-14",
         endDate: "2024-02-15",
-        status: "completed",
-        price: 45000,
+        status: "confirmed",
+        price: 15000,
         days: [
             {
                 day: 1,
                 date: "February 14",
                 title: "Heritage Walk",
                 activities: [
-                    { time: "Morning", icon: "fort", title: "Shaniwar Wada", description: "Explore the Peshwa fortification." },
-                    { time: "Afternoon", icon: "food", title: "Goodluck Cafe", description: "Bun Maska and Irani Chai." },
-                    { time: "Evening", icon: "mountain", title: "Sinhagad", description: "Sunset drive to the fort." }
+                    {
+                        time: "Morning",
+                        icon: "fort",
+                        title: "Shaniwar Wada",
+                        description: "Explore the Peshwa fortification.",
+                        location: "Shaniwar Wada, Pune",
+                        mapUrl: "https://goo.gl/maps/pune",
+                        visitTime: "10:00 AM - 5:00 PM",
+                        foodRecommendation: "Misal Pav at Kata Kirr"
+                    },
+                    {
+                        time: "Afternoon",
+                        icon: "food",
+                        title: "Goodluck Cafe",
+                        description: "Bun Maska and Irani Chai.",
+                        location: "Deccan Gymkhana",
+                        visitTime: "4:00 PM",
+                        foodRecommendation: "Bun Maska"
+                    },
+                    {
+                        time: "Evening",
+                        icon: "mountain",
+                        title: "Sinhagad",
+                        description: "Sunset drive to the fort.",
+                        location: "Sinhagad Fort",
+                        visitTime: "5:30 PM",
+                        foodRecommendation: "Pithla Bhakri"
+                    }
                 ]
             }
         ]
-    },
-    {
-        id: "5",
-        userId: "user-1",
-        destination: "Santorini, Greece",
-        heroImage: "https://images.unsplash.com/photo-1570077188670-e3a8d69ac5ff?w=1200",
-        startDate: "2023-09-15",
-        endDate: "2023-09-20",
-        status: "completed",
-        price: 95000,
-        days: []
-    },
-    {
-        id: "6",
-        userId: "user-1",
-        destination: "Kyoto, Japan",
-        heroImage: "https://images.unsplash.com/photo-1493976040374-85c8e12f0c0e?w=1200",
-        startDate: "2023-11-05",
-        endDate: "2023-11-10",
-        status: "completed",
-        price: 110000,
-        days: []
     },
     {
         id: "7",
@@ -780,7 +909,217 @@ const INITIAL_ITINERARIES: Itinerary[] = [
         endDate: "2023-12-03",
         status: "completed",
         price: 15000,
+        days: [
+            {
+                day: 1,
+                date: "December 1",
+                title: "City of Dreams",
+                activities: [
+                    {
+                        time: "Morning",
+                        icon: "camera",
+                        title: "Gateway of India",
+                        description: "Sightseeing.",
+                        location: "Apollo Bunder",
+                        mapUrl: "https://goo.gl/maps/mumbai",
+                        visitTime: "8:00 AM",
+                        foodRecommendation: "Vada Pav"
+                    },
+                    {
+                        time: "Afternoon",
+                        icon: "food",
+                        title: "Cafe Leopold",
+                        description: "Lunch at historic cafe.",
+                        location: "Colaba Causeway",
+                        visitTime: "1:00 PM",
+                        foodRecommendation: "Keema Pav"
+                    },
+                    {
+                        time: "Evening",
+                        icon: "sun",
+                        title: "Marine Drive",
+                        description: "Sunset walk.",
+                        location: "Marine Drive",
+                        visitTime: "6:00 PM",
+                        foodRecommendation: "Pav Bhaji at Sardar's"
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        id: "101",
+        userId: "user-1",
+        destination: "Agra, India",
+        heroImage: "https://images.unsplash.com/photo-1564507592333-c60657eea523?w=1200",
+        startDate: "2024-11-10",
+        endDate: "2024-11-12",
+        status: "completed",
+        price: 18000,
+        days: [
+            {
+                day: 1,
+                date: "November 10",
+                title: "Taj Visit",
+                activities: [
+                    {
+                        time: "Morning",
+                        icon: "camera",
+                        title: "Taj Mahal",
+                        description: "Early morning visit.",
+                        location: "Dharmapuri, Forest Colony",
+                        mapUrl: "https://goo.gl/maps/agra",
+                        visitTime: "6:00 AM",
+                        foodRecommendation: "Bedai and Jalebi"
+                    },
+                    {
+                        time: "Afternoon",
+                        icon: "walk",
+                        title: "Agra Fort",
+                        description: "History walk.",
+                        location: "Agra Fort",
+                        visitTime: "2:00 PM",
+                        foodRecommendation: "Mughlai Cuisine"
+                    },
+                    {
+                        time: "Evening",
+                        icon: "food",
+                        title: "Petha Shopping",
+                        description: "Buying famous sweets.",
+                        location: "Kinari Bazaar",
+                        visitTime: "6:00 PM",
+                        foodRecommendation: "Panchi Petha"
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        id: "102",
+        userId: "user-1",
+        destination: "Kerala, India",
+        heroImage: "https://images.unsplash.com/photo-1602216056096-3b40cc0c9944?w=1200",
+        startDate: "2025-01-20",
+        endDate: "2025-01-25",
+        status: "pending",
+        price: 32000,
         days: []
+    },
+    {
+        id: "103",
+        userId: "user-1",
+        destination: "Manali, India",
+        heroImage: "https://images.unsplash.com/photo-1626621341517-bbf3d9990a23?w=1200",
+        startDate: "2024-05-15",
+        endDate: "2024-05-20",
+        status: "completed",
+        price: 28000,
+        days: []
+    },
+    {
+        id: "104",
+        userId: "user-1",
+        destination: "Varanasi, India",
+        heroImage: "/varanasi.webp",
+        startDate: "2024-10-02",
+        endDate: "2024-10-04",
+        status: "completed",
+        price: 14000,
+        days: []
+    },
+    {
+        id: "105",
+        userId: "user-1",
+        destination: "Konkan, India",
+        heroImage: "/konkan.webp",
+        startDate: "2024-11-20",
+        endDate: "2024-11-22",
+        status: "confirmed",
+        price: 16000,
+        days: [
+            {
+                day: 1,
+                date: "November 20",
+                title: "Coastal Drive",
+                activities: [
+                    {
+                        time: "Morning",
+                        icon: "bus",
+                        title: "Drive to Alibaug",
+                        description: "Scenic coastal drive.",
+                        location: "Alibaug",
+                        mapUrl: "https://goo.gl/maps/konkan",
+                        visitTime: "8:00 AM",
+                        foodRecommendation: "Vada Pav on the way"
+                    },
+                    {
+                        time: "Afternoon",
+                        icon: "water",
+                        title: "Nagaon Beach",
+                        description: "Water sports and relaxation.",
+                        location: "Nagaon Beach",
+                        visitTime: "3:00 PM",
+                        foodRecommendation: "Fresh Coconut Water"
+                    },
+                    {
+                        time: "Evening",
+                        icon: "food",
+                        title: "Seafood Thali",
+                        description: "Authentic Konkani seafood dinner.",
+                        location: "Sanman Restaurant",
+                        visitTime: "8:00 PM",
+                        foodRecommendation: "Surmai Fry"
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        id: "106",
+        userId: "user-1",
+        destination: "Hampi, India",
+        heroImage: "/Hampi_karnataka.jpg",
+        startDate: "2024-12-05",
+        endDate: "2024-12-08",
+        status: "confirmed",
+        price: 18000,
+        days: [
+            {
+                day: 1,
+                date: "December 5",
+                title: "Sacred Center",
+                activities: [
+                    {
+                        time: "Morning",
+                        icon: "temple",
+                        title: "Virupaksha Temple",
+                        description: "Visit the towering ancient temple.",
+                        location: "Hampi Main Bazaar",
+                        mapUrl: "https://goo.gl/maps/hampi",
+                        visitTime: "9:00 AM",
+                        foodRecommendation: "South Indian Breakfast"
+                    },
+                    {
+                        time: "Afternoon",
+                        icon: "walk",
+                        title: "Hampi Bazaar",
+                        description: "Explore the ancient market street.",
+                        location: "Hampi Bazaar",
+                        visitTime: "4:00 PM",
+                        foodRecommendation: "Mango Tree Restaurant"
+                    },
+                    {
+                        time: "Evening",
+                        icon: "sun",
+                        title: "Hemakuta Hill",
+                        description: "Sunset views over the ruins.",
+                        location: "Hemakuta Hill",
+                        visitTime: "6:00 PM",
+                        foodRecommendation: "Masala Chai"
+                    }
+                ]
+            }
+        ]
     }
 ];
 
@@ -789,11 +1128,11 @@ const INITIAL_REQUESTS: Request[] = [
         id: "1",
         userId: "user-2",
         user: { name: "Sarah Mitchell", email: "sarah@example.com" },
-        destination: "Maldives",
-        startDate: "2025-01-10",
+        destination: "Ladakh",
+        startDate: "2025-06-10",
         days: 10,
-        budget: "$5000",
-        mobile: "+1234567890",
+        budget: "₹50,000",
+        mobile: "+91 9876543210",
         isWhatsapp: true,
         priority: "high",
         status: "pending",
@@ -807,9 +1146,9 @@ const INITIAL_COMMUNITY_POSTS: CommunityPost[] = [
         userId: "user-sarah",
         userName: "Sarah Mitchell",
         userAvatar: "https://i.pravatar.cc/150?u=sarah",
-        destinationTag: "Santorini",
-        content: "Just returned from the most magical sunset in Oia! 🌅 Definitely recommend booking a table at Kastro Oia restaurant way in advance. The view is unbeatable!",
-        image: "https://images.unsplash.com/photo-1570077188670-e3a8d69ac5ff?w=600",
+        destinationTag: "Goa",
+        content: "Just returned from the most magical sunset at Baga Beach! 🌅 Definitely recommend booking a shack for dinner. The vibe is unbeatable!",
+        image: "https://images.unsplash.com/photo-1512343879784-a960bf40e7f2?w=600",
         likes: ["user-1", "user-3"],
         savedBy: [],
         comments: [
@@ -828,9 +1167,9 @@ const INITIAL_COMMUNITY_POSTS: CommunityPost[] = [
         userId: "user-mike",
         userName: "Mike Traveler",
         userAvatar: "https://i.pravatar.cc/150?u=mike",
-        destinationTag: "Kyoto",
-        content: "The bamboo grove in Arashiyama is serene if you get there by 7 AM. After 9 AM it's packed! 🎋 #Japan #TravelTips",
-        image: "https://images.unsplash.com/photo-1493976040374-85c8e12f0c0e?w=600",
+        destinationTag: "Manali",
+        content: "The snow in Solang Valley is perfect right now! ❄️ Paragliding was an experience of a lifetime. #Manali #Adventure",
+        image: "https://images.unsplash.com/photo-1626621341517-bbf3d9990a23?w=600",
         likes: ["user-sarah"],
         savedBy: ["user-1"],
         comments: [],
@@ -852,9 +1191,9 @@ const INITIAL_COMMUNITY_POSTS: CommunityPost[] = [
         userId: "user-david",
         userName: "David Chen",
         userAvatar: "https://i.pravatar.cc/150?u=david",
-        destinationTag: "Paris",
-        content: "Found this hidden gem of a cafe in Montmartre. The croissant was life-changing! 🥐☕️ #Paris #Foodie",
-        image: "https://images.unsplash.com/photo-1511739001486-6bfe10ce7859?w=600",
+        destinationTag: "Kerala",
+        content: "Floating on the backwaters of Alleppey in a houseboat. Pure serenity. 🌴🛶 #Kerala #GodsOwnCountry",
+        image: "https://images.unsplash.com/photo-1602216056096-3b40cc0c9944?w=600",
         likes: ["user-1", "user-sarah"],
         savedBy: ["user-1"],
         comments: [
@@ -862,7 +1201,7 @@ const INITIAL_COMMUNITY_POSTS: CommunityPost[] = [
                 id: "c2",
                 userId: "user-sarah",
                 userName: "Sarah Mitchell",
-                text: "Which cafe is this? I need to go!",
+                text: "Which houseboat service did you use?",
                 createdAt: "2024-12-16T16:00:00Z"
             }
         ],
@@ -873,9 +1212,9 @@ const INITIAL_COMMUNITY_POSTS: CommunityPost[] = [
         userId: "user-amara",
         userName: "Amara N.",
         userAvatar: "https://i.pravatar.cc/150?u=amara",
-        destinationTag: "Maldives",
-        content: "Waking up to this view every day... I never want to leave! 🏝️ The water is clearer than glass.",
-        image: "https://images.unsplash.com/photo-1514282401047-d79a71a590e8?w=600",
+        destinationTag: "Varanasi",
+        content: "The Ganga Aarti at Dashashwamedh Ghat left me speechless. The energy is indescribable. 🙏✨",
+        image: "/varanasi.webp",
         likes: ["user-mike", "user-david"],
         savedBy: [],
         comments: [],
@@ -886,9 +1225,9 @@ const INITIAL_COMMUNITY_POSTS: CommunityPost[] = [
         userId: "user-tom",
         userName: "Tom Wilson",
         userAvatar: "https://i.pravatar.cc/150?u=tom",
-        destinationTag: "Iceland",
-        content: "Chasing the Northern Lights was totally worth the freezing cold. 🌌 Simply magical experience.",
-        image: "https://images.unsplash.com/photo-1531366936337-7c912a4589a7?w=600",
+        destinationTag: "Agra",
+        content: "Finally saw the Taj Mahal at sunrise. It truly is a wonder of the world. 🕌 #TajMahal #India",
+        image: "https://images.unsplash.com/photo-1564507592333-c60657eea523?w=600",
         likes: ["user-1", "user-sarah", "user-anjali"],
         savedBy: ["user-1"],
         comments: [],
@@ -906,17 +1245,17 @@ class LocalStore {
     }
 
     private init() {
-        if (!localStorage.getItem("wg_destinations_v9")) {
-            localStorage.setItem("wg_destinations_v9", JSON.stringify(INITIAL_DESTINATIONS));
+        if (!localStorage.getItem("wg_destinations_v17")) {
+            localStorage.setItem("wg_destinations_v17", JSON.stringify(INITIAL_DESTINATIONS));
         }
-        if (!localStorage.getItem("wg_itineraries_v9")) {
-            localStorage.setItem("wg_itineraries_v9", JSON.stringify(INITIAL_ITINERARIES));
+        if (!localStorage.getItem("wg_itineraries_v22")) {
+            localStorage.setItem("wg_itineraries_v22", JSON.stringify(INITIAL_ITINERARIES));
         }
-        if (!localStorage.getItem("wg_requests_v9")) {
-            localStorage.setItem("wg_requests_v9", JSON.stringify(INITIAL_REQUESTS));
+        if (!localStorage.getItem("wg_requests_v11")) {
+            localStorage.setItem("wg_requests_v11", JSON.stringify(INITIAL_REQUESTS));
         }
-        if (!localStorage.getItem("wg_community_posts_v3")) {
-            localStorage.setItem("wg_community_posts_v3", JSON.stringify(INITIAL_COMMUNITY_POSTS));
+        if (!localStorage.getItem("wg_community_posts_v8")) {
+            localStorage.setItem("wg_community_posts_v8", JSON.stringify(INITIAL_COMMUNITY_POSTS));
         }
         // No mock users stored, we'll just handle auth in memory/localstorage session
     }
@@ -924,20 +1263,42 @@ class LocalStore {
     // Destinations
     async getDestinations(): Promise<Destination[]> {
         await delay(300);
-        return JSON.parse(localStorage.getItem("wg_destinations_v9") || "[]");
+        return JSON.parse(localStorage.getItem("wg_destinations_v17") || "[]");
     }
 
     async getDestination(id: number): Promise<Destination | undefined> {
         await delay(200);
-        const all = JSON.parse(localStorage.getItem("wg_destinations_v9") || "[]") as Destination[];
+        const all = JSON.parse(localStorage.getItem("wg_destinations_v17") || "[]") as Destination[];
         return all.find(d => d.id === id);
     }
 
+    async addDestination(destination: Omit<Destination, "id">): Promise<Destination> {
+        await delay(400);
+        const all = JSON.parse(localStorage.getItem("wg_destinations_v17") || "[]") as Destination[];
+        const newId = Math.max(...all.map(d => d.id), 0) + 1;
+        const newDestination = { ...destination, id: newId };
+        all.push(newDestination);
+        localStorage.setItem("wg_destinations_v17", JSON.stringify(all));
+        return newDestination;
+    }
+
+    async updateDestination(id: number, updates: Partial<Destination>): Promise<Destination> {
+        await delay(400);
+        const all = JSON.parse(localStorage.getItem("wg_destinations_v17") || "[]") as Destination[];
+        const index = all.findIndex(d => d.id === id);
+        if (index === -1) throw new Error("Destination not found");
+
+        const updated = { ...all[index], ...updates };
+        all[index] = updated;
+        localStorage.setItem("wg_destinations_v17", JSON.stringify(all));
+        return updated;
+    }
+
     // Itineraries
-    async getItineraries(userId: string): Promise<Itinerary[]> {
+    async getItineraries(userId: string, isAdmin: boolean = false): Promise<Itinerary[]> {
         await delay(500);
-        // Using v12 key to force load of new demo data
-        const stored = localStorage.getItem("wg_itineraries_v12");
+        // Using v21 key to force load of new demo data
+        const stored = localStorage.getItem("wg_itineraries_v22");
         let allItineraries: Itinerary[] = [];
 
         if (stored) {
@@ -947,6 +1308,8 @@ class LocalStore {
             allItineraries = INITIAL_ITINERARIES;
             this.saveItineraries(userId, allItineraries); // Save initial data
         }
+
+        if (isAdmin) return allItineraries;
 
         // Filter personal itineraries
         const userItineraries = allItineraries.filter(it => it.userId === userId);
@@ -963,20 +1326,60 @@ class LocalStore {
 
     async saveItineraries(userId: string, itineraries: Itinerary[]): Promise<void> {
         await delay(300);
-        // Persist to v12
-        localStorage.setItem("wg_itineraries_v12", JSON.stringify(itineraries));
+        // Persist to v21
+        localStorage.setItem("wg_itineraries_v22", JSON.stringify(itineraries));
     }
 
     async getItinerary(id: string): Promise<Itinerary | undefined> {
         await delay(200);
-        const all = JSON.parse(localStorage.getItem("wg_itineraries_v12") || "[]") as Itinerary[];
+        const all = JSON.parse(localStorage.getItem("wg_itineraries_v22") || "[]") as Itinerary[];
         return all.find(it => it.id === id);
+    }
+
+    async createItinerary(itinerary: Omit<Itinerary, "id">): Promise<Itinerary> {
+        await delay(400);
+        const all = JSON.parse(localStorage.getItem("wg_itineraries_v22") || "[]") as Itinerary[];
+        const newItinerary = {
+            ...itinerary,
+            id: Math.random().toString(36).substr(2, 9)
+        };
+        all.unshift(newItinerary); // Add to top
+        localStorage.setItem("wg_itineraries_v22", JSON.stringify(all));
+        return newItinerary;
+    }
+
+    async updateItinerary(id: string, updates: Partial<Itinerary>): Promise<Itinerary> {
+        await delay(400);
+        const all = JSON.parse(localStorage.getItem("wg_itineraries_v22") || "[]") as Itinerary[];
+        const index = all.findIndex(it => it.id === id);
+        if (index === -1) throw new Error("Itinerary not found");
+
+        const updated = { ...all[index], ...updates };
+        all[index] = updated;
+        localStorage.setItem("wg_itineraries_v22", JSON.stringify(all));
+        return updated;
     }
 
     // Requests
     async getRequests(): Promise<Request[]> {
         await delay(400);
-        return JSON.parse(localStorage.getItem("wg_requests_v9") || "[]");
+        return JSON.parse(localStorage.getItem("wg_requests_v11") || "[]");
+    }
+
+    async createRequest(request: Omit<Request, "id" | "status" | "createdAt">): Promise<Request> {
+        await delay(400);
+        const all = JSON.parse(localStorage.getItem("wg_requests_v11") || "[]") as Request[];
+
+        const newRequest: Request = {
+            ...request,
+            id: "req-" + Math.random().toString(36).substr(2, 9),
+            status: "pending",
+            createdAt: new Date().toISOString(),
+        };
+
+        all.unshift(newRequest);
+        localStorage.setItem("wg_requests_v11", JSON.stringify(all));
+        return newRequest;
     }
 
     // ... (skipping unchanged parts)
@@ -984,12 +1387,12 @@ class LocalStore {
     // Community
     async getCommunityPosts(): Promise<CommunityPost[]> {
         await delay(300);
-        return JSON.parse(localStorage.getItem("wg_community_posts_v3") || "[]");
+        return JSON.parse(localStorage.getItem("wg_community_posts_v8") || "[]");
     }
 
     async createCommunityPost(post: Omit<CommunityPost, "id" | "likes" | "savedBy" | "createdAt" | "comments">): Promise<CommunityPost> {
         await delay(400);
-        const all = JSON.parse(localStorage.getItem("wg_community_posts_v3") || "[]") as CommunityPost[];
+        const all = JSON.parse(localStorage.getItem("wg_community_posts_v8") || "[]") as CommunityPost[];
 
         const newPost: CommunityPost = {
             ...post,
@@ -1001,13 +1404,13 @@ class LocalStore {
         };
 
         all.unshift(newPost);
-        localStorage.setItem("wg_community_posts_v3", JSON.stringify(all));
+        localStorage.setItem("wg_community_posts_v8", JSON.stringify(all));
         return newPost;
     }
 
     async togglePostLike(postId: string, userId: string): Promise<CommunityPost[]> {
         // Optimistic update
-        const all = JSON.parse(localStorage.getItem("wg_community_posts_v3") || "[]") as CommunityPost[];
+        const all = JSON.parse(localStorage.getItem("wg_community_posts_v8") || "[]") as CommunityPost[];
         const postIndex = all.findIndex(p => p.id === postId);
 
         if (postIndex !== -1) {
@@ -1021,7 +1424,7 @@ class LocalStore {
             }
 
             all[postIndex] = post;
-            localStorage.setItem("wg_community_posts_v3", JSON.stringify(all));
+            localStorage.setItem("wg_community_posts_v8", JSON.stringify(all));
         }
 
         return all;
@@ -1029,7 +1432,7 @@ class LocalStore {
 
     async addComment(postId: string, comment: Omit<Comment, "id" | "createdAt">): Promise<CommunityPost[]> {
         await delay(300);
-        const all = JSON.parse(localStorage.getItem("wg_community_posts_v3") || "[]") as CommunityPost[];
+        const all = JSON.parse(localStorage.getItem("wg_community_posts_v8") || "[]") as CommunityPost[];
         const postIndex = all.findIndex(p => p.id === postId);
 
         if (postIndex !== -1) {
@@ -1043,7 +1446,26 @@ class LocalStore {
             if (!all[postIndex].comments) all[postIndex].comments = [];
 
             all[postIndex].comments.push(newComment);
-            localStorage.setItem("wg_community_posts_v3", JSON.stringify(all));
+            localStorage.setItem("wg_community_posts_v8", JSON.stringify(all));
+        }
+        return all;
+    }
+
+    async deleteCommunityPost(postId: string): Promise<CommunityPost[]> {
+        await delay(300);
+        let all = JSON.parse(localStorage.getItem("wg_community_posts_v8") || "[]") as CommunityPost[];
+        all = all.filter(p => p.id !== postId);
+        localStorage.setItem("wg_community_posts_v8", JSON.stringify(all));
+        return all;
+    }
+
+    async updateCommunityPost(postId: string, content: string): Promise<CommunityPost[]> {
+        await delay(300);
+        let all = JSON.parse(localStorage.getItem("wg_community_posts_v8") || "[]") as CommunityPost[];
+        const index = all.findIndex(p => p.id === postId);
+        if (index !== -1) {
+            all[index] = { ...all[index], content };
+            localStorage.setItem("wg_community_posts_v8", JSON.stringify(all));
         }
         return all;
     }

@@ -89,62 +89,50 @@ export default function ItineraryDetail({ previewData }: ItineraryDetailProps) {
       <Navbar user={user} />
 
       {/* Hero */}
-      <div className="relative h-[50vh] min-h-[400px]">
+      <div className="relative h-[60vh] min-h-[500px] w-full">
         <img
-          src={itineraryData.heroImage}
+          src={itineraryData.heroImage || "https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?w=1200&h=800&fit=crop"}
           alt={itineraryData.destination}
-          className="absolute inset-0 w-full h-full object-cover"
+          className="w-full h-full object-cover"
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-t from-background via-black/40 to-transparent" />
 
         <div className="absolute inset-0 flex flex-col justify-end">
-          <div className="container mx-auto px-4 pb-8">
+          <div className="container mx-auto px-6 pb-12">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
+              className="max-w-4xl"
             >
-              {/* Breadcrumb */}
               <div className="flex items-center gap-2 text-white/70 text-sm mb-4">
-                <Link to="/dashboard" className="hover:text-white">Dashboard</Link>
+                <Link to="/" className="hover:text-white transition-colors">Home</Link>
                 <span>/</span>
-                <Link to="/dashboard/itineraries" className="hover:text-white">Itineraries</Link>
+                <span className="text-white">Itineraries</span>
                 <span>/</span>
                 <span className="text-white">{itineraryData.destination}</span>
               </div>
 
-              <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-4">
-                <div>
-                  <Badge variant={itineraryData.status as any} className="mb-3">
-                    {itineraryData.status.charAt(0).toUpperCase() + itineraryData.status.slice(1)}
-                  </Badge>
-                  <h1 className="text-4xl md:text-5xl font-bold text-white mb-3">
-                    {itineraryData.destination}
-                  </h1>
-                  <div className="flex items-center gap-4 text-white/80">
-                    <div className="flex items-center gap-2">
-                      <Calendar className="w-4 h-4" />
-                      <span>{itineraryData.startDate} — {itineraryData.endDate}</span>
-                    </div>
-                    <div className="flex items-center gap-2">
-                      <Clock className="w-4 h-4" />
-                      <span>{itineraryData.days.length} days</span>
-                    </div>
-                  </div>
-                </div>
+              <h1 className="text-4xl md:text-5xl font-bold text-white mb-6">
+                {itineraryData.destination}
+              </h1>
 
-                <div className="flex gap-2">
-                  <Button variant="glass" size="sm">
-                    <Download className="w-4 h-4 mr-2" />
-                    PDF
-                  </Button>
-                  <Button variant="glass" size="sm">
-                    <Share2 className="w-4 h-4 mr-2" />
-                    Share
-                  </Button>
-                  <Button variant="glass" size="sm">
-                    <Printer className="w-4 h-4" />
-                  </Button>
+              <div className="flex flex-wrap items-center gap-4 text-white/90 mb-8">
+                <div className="flex items-center gap-2 bg-white/10 backdrop-blur-md px-4 py-2 rounded-full border border-white/10">
+                  <Calendar className="w-4 h-4" />
+                  <span className="text-sm font-medium">{itineraryData.startDate} — {itineraryData.endDate}</span>
                 </div>
+                <div className="flex items-center gap-2 bg-white/10 backdrop-blur-md px-4 py-2 rounded-full border border-white/10">
+                  <span className="text-sm font-medium">{itineraryData.price ? `$${itineraryData.price}` : "Price TBD"}</span>
+                </div>
+              </div>
+
+              <div className="flex gap-3">
+                <Button className="bg-white text-black hover:bg-white/90 border-0">
+                  <Download className="w-4 h-4 mr-2" /> Download PDF
+                </Button>
+                <Button variant="outline" className="text-white border-white/20 bg-black/20 hover:bg-black/40 hover:text-white backdrop-blur-sm">
+                  <Share2 className="w-4 h-4 mr-2" /> Share
+                </Button>
               </div>
             </motion.div>
           </div>
@@ -152,128 +140,109 @@ export default function ItineraryDetail({ previewData }: ItineraryDetailProps) {
       </div>
 
       {/* Content */}
-      <div className="container mx-auto px-4 py-12">
-        <Button variant="ghost" size="sm" className="mb-8" asChild>
-          <Link to="/dashboard">
-            <ArrowLeft className="w-4 h-4 mr-2" />
-            Back to Dashboard
-          </Link>
-        </Button>
+      <div className="container mx-auto px-6 py-16">
+        <div className="max-w-4xl mx-auto">
+          {/* Main Itinerary Column */}
+          <div className="space-y-8">
+            <div>
+              <h2 className="text-3xl font-bold mb-8 text-foreground">Your Itinerary</h2>
+              <div className="space-y-8">
+                {itineraryData.days.map((day, dayIndex) => (
+                  <motion.div
+                    key={dayIndex}
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: dayIndex * 0.1 }}
+                    className="bg-card rounded-2xl shadow-card overflow-hidden border border-border/50"
+                  >
+                    {/* Day Header */}
+                    <div className="bg-muted/30 px-6 py-4 border-b border-border/50">
+                      <div>
+                        <span className="text-primary font-bold text-sm uppercase tracking-wider">{day.date || `Day ${day.day}`}</span>
+                        <h3 className="text-xl font-semibold text-foreground mt-1">{day.title}</h3>
+                      </div>
+                    </div>
 
-        {/* Day by Day */}
-        <div className="space-y-8">
-          {itineraryData.days.map((day, dayIndex) => (
-            <motion.div
-              key={day.day}
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: dayIndex * 0.1 }}
-              className="bg-card rounded-2xl shadow-card overflow-hidden"
-            >
-              {/* Day Header */}
-              <div className="bg-primary px-6 py-4">
-                <div className="flex items-center justify-between">
-                  <div>
-                    <span className="text-primary-foreground/70 text-sm">Day {day.day}</span>
-                    <h3 className="text-xl font-semibold text-primary-foreground">
-                      {day.title}
-                    </h3>
-                  </div>
-                  <div className="text-primary-foreground/80 text-sm">
-                    {day.date}
-                  </div>
-                </div>
-              </div>
-
-              {/* Activities */}
-              <div className="p-6">
-                <div className="space-y-6">
-                  {day.activities.map((activity, actIndex) => {
-                    const TimeIcon = timeIcons[activity.time as keyof typeof timeIcons] || Sun;
-                    const ActivityIcon = activityIcons[activity.icon as keyof typeof activityIcons] || MapPin;
-
-                    return (
-                      <motion.div
-                        key={actIndex}
-                        initial={{ opacity: 0, x: -20 }}
-                        animate={{ opacity: 1, x: 0 }}
-                        transition={{ delay: dayIndex * 0.1 + actIndex * 0.05 }}
-                        className="flex gap-4"
-                      >
-                        {/* Timeline */}
-                        <div className="flex flex-col items-center">
-                          <div className="w-10 h-10 rounded-full bg-accent/20 flex items-center justify-center">
-                            <TimeIcon className="w-5 h-5 text-accent" />
-                          </div>
-                          {actIndex < day.activities.length - 1 && (
-                            <div className="w-0.5 flex-1 bg-border mt-2" />
-                          )}
-                        </div>
-
-                        {/* Content */}
-                        <div className="flex-1 pb-6">
-                          <div className="flex items-center gap-2 text-sm text-muted-foreground mb-1">
-                            <span>{activity.time}</span>
-                          </div>
-                          <div className="bg-muted/50 rounded-xl p-4">
-                            <div className="flex items-start gap-3">
-                              <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center flex-shrink-0">
-                                <ActivityIcon className="w-5 h-5 text-primary" />
+                    {/* Activities */}
+                    <div className="p-6">
+                      <div className="space-y-6">
+                        {day.activities.map((act, actIndex) => (
+                          <div key={actIndex} className="flex gap-4 group">
+                            {/* Timeline section */}
+                            <div className="flex flex-col items-center">
+                              <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center">
+                                <div className="w-5 h-5 text-primary flex items-center justify-center">
+                                  {act.time === 'Morning' ? <span className="text-lg">☀️</span> :
+                                    act.time === 'Evening' ? <span className="text-lg">🌙</span> :
+                                      <span className="text-lg">🌤️</span>}
+                                </div>
                               </div>
-                              <div>
-                                <h4 className="font-semibold text-foreground mb-1">
-                                  {activity.title}
-                                </h4>
-                                <p className="text-sm text-muted-foreground">
-                                  {activity.description}
-                                </p>
+                              {actIndex < day.activities.length - 1 && (
+                                <div className="w-0.5 flex-1 bg-border mt-2" />
+                              )}
+                            </div>
+
+                            {/* Activity Content */}
+                            <div className="flex-1 pb-2">
+                              <div className="flex items-center gap-2 text-sm text-muted-foreground mb-1">
+                                <span>{act.time}</span>
+                              </div>
+                              <div className="bg-muted/30 rounded-xl p-4 hover:bg-muted/50 transition-colors">
+                                <div className="flex flex-col md:flex-row gap-4">
+                                  {act.image && (
+                                    <img
+                                      src={act.image}
+                                      alt={act.title}
+                                      className="w-full md:w-32 h-32 object-cover rounded-lg flex-shrink-0"
+                                    />
+                                  )}
+                                  <div className="flex-1">
+                                    <h4 className="font-semibold text-foreground mb-1 text-lg">{act.title}</h4>
+                                    <p className="text-sm text-muted-foreground mb-3 leading-relaxed">{act.description}</p>
+
+                                    {act.location && (
+                                      <div className="flex flex-wrap gap-x-4 gap-y-2">
+                                        <a
+                                          href={act.mapUrl || `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(act.location)}`}
+                                          target="_blank"
+                                          rel="noopener noreferrer"
+                                          className="flex items-center gap-1.5 text-xs text-primary hover:underline w-fit bg-primary/10 px-2.5 py-1 rounded-md transition-colors hover:bg-primary/20"
+                                          onClick={(e) => e.stopPropagation()}
+                                        >
+                                          <MapPin className="w-3.5 h-3.5" />
+                                          {act.location}
+                                        </a>
+                                        {act.visitTime && (
+                                          <div className="flex items-center gap-1.5 text-xs text-muted-foreground bg-muted px-2.5 py-1 rounded-md">
+                                            <span className="text-lg">⏰</span>
+                                            <span>{act.visitTime}</span>
+                                          </div>
+                                        )}
+                                      </div>
+                                    )}
+
+                                    {act.foodRecommendation && (
+                                      <div className="flex items-center gap-1.5 text-xs text-amber-700 dark:text-amber-400 mt-3 bg-amber-50 dark:bg-amber-950/30 px-3 py-2 rounded-md border border-amber-100 dark:border-amber-900/50 w-fit">
+                                        <Utensils className="w-3.5 h-3.5" />
+                                        <span className="font-medium">Famous Food:</span>
+                                        <span>{act.foodRecommendation}</span>
+                                      </div>
+                                    )}
+                                  </div>
+                                </div>
                               </div>
                             </div>
                           </div>
-                        </div>
-                      </motion.div>
-                    );
-                  })}
-                </div>
+                        ))}
+                      </div>
+                    </div>
+                  </motion.div>
+                ))}
               </div>
-            </motion.div>
-          ))}
-        </div>
-
-        {/* Map placeholder */}
-        {/* Map */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.5 }}
-          className="mt-8 bg-card rounded-2xl shadow-card p-2 overflow-hidden"
-        >
-          <div className="h-96 w-full rounded-xl overflow-hidden">
-            <iframe
-              width="100%"
-              height="100%"
-              style={{ border: 0 }}
-              loading="lazy"
-              allowFullScreen
-              referrerPolicy="no-referrer-when-downgrade"
-              src={`https://www.google.com/maps/embed/v1/place?key=YOUR_API_KEY&q=${encodeURIComponent(itineraryData.destination)}`}
-            ></iframe>
-            {/* Note: Since we don't have a real API key, we'll revert to a static openstreetmap for demo purposes or keep the placeholder better styled */}
-            <div className="absolute inset-0 flex items-center justify-center pointer-events-none bg-muted/10">
-              {/* Fallback IFRAME for OpenStreetMap which doesn't need key */}
-              <iframe
-                width="100%"
-                height="100%"
-                frameBorder="0"
-                scrolling="no"
-                marginHeight={0}
-                marginWidth={0}
-                src={`https://www.openstreetmap.org/export/embed.html?bbox=-0.004017949104309083%2C51.47612752641776%2C0.00030577182769775396%2C51.478569861898606&layer=mapnik&marker=51.47734914170364%2C-0.001856088638305664`}
-                style={{ pointerEvents: 'auto', background: '#e5e7eb' }}
-              ></iframe>
             </div>
           </div>
-        </motion.div>
+
+        </div>
       </div>
     </div>
   );

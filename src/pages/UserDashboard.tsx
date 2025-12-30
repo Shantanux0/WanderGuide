@@ -114,7 +114,7 @@ export default function UserDashboard() {
                   <div className="relative flex-1">
                     <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground" />
                     <Input
-                      placeholder="Search destinations (e.g. Paris)..."
+                      placeholder="Search destinations (e.g. Goa)..."
                       className="pl-10 h-12 bg-white border-0"
                       value={searchQuery}
                       onChange={(e) => setSearchQuery(e.target.value)}
